@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//litten.me">
-  <title>Penglian的博客</title>
+  <title>Android的IPC机制 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//litten.me/assets/demo/border1px.html">
+  <meta name="description" content="简要介绍Android IPC和多进程的运行模式以及常见的几种IPC方式。">
+<meta name="keywords" content="android,IPC,Binder,AIDL,Messenger">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android的IPC机制">
+<meta property="og:url" content="//litten.me/2018/06/13/blog_ipc_GitHub/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
+<meta property="og:description" content="简要介绍Android IPC和多进程的运行模式以及常见的几种IPC方式。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-28T03:51:08.000Z">
+<meta property="og:image" content="//litten.me/img/pl/ipc_messenger.png">
+<meta property="og:image" content="//litten.me/img/pl/ipc_difference.png">
+<meta property="og:updated_time" content="2018-06-13T06:23:17.653Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
+<meta name="twitter:title" content="Android的IPC机制">
+<meta name="twitter:description" content="简要介绍Android IPC和多进程的运行模式以及常见的几种IPC方式。">
+<meta name="twitter:image" content="//litten.me/img/pl/ipc_messenger.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -147,866 +150,58 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-blog_ipc_GitHub" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android的IPC机制
+    </h1>
+  
+
+        
+        <a href="/2018/06/13/blog_ipc_GitHub/" class="archive-article-date">
+  	<time datetime="2018-06-13T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
-    <title>日语50音</title>
-    <style type="text/css">
-    /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,menu{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}html,body{-webkit-text-size-adjust:none;-webkit-touch-callout:none;vertical-align:middle;font-size:16px;background:#e6e6e6;position:relative;height:100%;font-family:Tahoma,Arial,"Microsoft Yahei",sans-serif}.clearfix:after{content:" ";display:block;clear:both;visibility:hidden;line-height:0;height:0}input::-webkit-input-placeholder{color:#aaa}a,div{-webkit-tap-highlight-color:rgba(0,0,0,0)}a,a:active,a:hover{color:#0057af;text-decoration:none}header,.header{width:215px;height:58px;background:url(http://3.url.cn/qun/create_iphone/img/sprite.png) no-repeat transparent 0 0;color:#fff;line-height:58px;padding-left:64px;font-size:24px;-webkit-transform:scale(0.82) scale(0.82);-webkit-transform-origin:0 50%}.input-group{overflow:hidden;vertical-align:middle;line-height:16px;background-color:#fff;}#main-section{position:relative;height:100%;min-height:370px;overflow:hidden;}.input-group label{width:100px;padding:10px 0 10px 12px;display:inline-block;border-right:0;float:left;color:gray;-webkit-appearance:none;height:24px;line-height:24px;}.input-group .ui-select{margin-left:115px;padding:10px 24px 10px 15px;position:relative;}.input-group .select-btn{width:100%;height:24px;line-height:24px;color:#aaa;}.input-group .select-btn span.ui-text{text-align:right;display:inline-block;width:100%;white-space:nowrap;overflow:inherit;text-overflow:ellipsis;pointer-events:none;}.input-group .select-btn span.ui-icon{display:inline-block;position:absolute;top:50%;margin:-10px 0 0 -3px;width:18px;height:20px;right:7px;}.input-group .select-btn span.ui-icon .arrow{width:18px;height:18px;position:relative;display:inline-block;float:right;background:transparent;margin-right:-5px;margin-top:1px;}.input-group .select-btn span.ui-icon .arrow div{background:#ccc;position:absolute;width:3px;height:12px;}.input-group .select-btn span.ui-icon .arrow div.arrow1{left:19px;top:12px;-webkit-transform:rotate(-45deg) translate(0,-142%);}.input-group .select-btn span.ui-icon .arrow div.arrow2{left:-5px;top:19px;-webkit-transform:rotate(45deg) translate(0,-142%);}.seg-words{color:#6d6d72;height:20px;font-size:1em;text-shadow:0 1px #fff;padding:3px 0 6px 14px;}
-                
-         /*border-1px 部分*/
-         .border-1px{
-              position: relative;
-         }
-        .border-1px:before, .border-1px:after{
-            border-top: 1px solid #c8c7cc;
-            content: ' ';
-            display: block;
-            width: 100%;
-            position: absolute;
-            left: 0;
-        }
-        .border-1px:before{
-            top: 0;
-            display: none;
-        }
-        .border-1px:after{
-            bottom: 0;
-        }
-         @media (-webkit-min-device-pixel-ratio:1.5), (min-device-pixel-ratio: 1.5){
-          .border-1px:after,.border-1px:before{
-              -webkit-transform: scaleY(.7);
-              -webkit-transform-origin: 0 0;
-              transform: scaleY(.7);
-            }
-             .border-1px:after{
-              -webkit-transform-origin: left bottom;
-            }
-        }
+        <hr>
+<p>简要介绍Android IPC和多进程的运行模式以及常见的几种IPC方式。<br><a id="more"></a></p>
+<h2 id="IPC简介"><a href="#IPC简介" class="headerlink" title="IPC简介"></a>IPC简介</h2><h3 id="IPC"><a href="#IPC" class="headerlink" title="IPC"></a>IPC</h3><p>IPC是Inter-Process Communication的缩写，含义为进程间通信或者跨进程通信，是指两个进程间进行数据交换的过程。</p>
+<h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>进程一般指一个执行单元，在PC或者移动设备上指一个程序或者一个应用；线程是CPU调度的最小单元，同时线程也是一种有限的系统资源。一个进程可以包含多个线程，两者是包含的关系。例如在Android应用中，默认都含有一个主线程，也叫做UI线程，用于操作一些界面绘制的任务，如果把一些耗时任务放在UI线程中，就会引起ANR(应用没有响应)，所以必须将其放入到子线程中进行。</p>
+<h3 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h3><p>对于Android开发者来说，Binder应该是既熟悉又陌生，熟悉是因为在Android系统中它无处不在，陌生是因为它学习门槛高，从应用开发层贯穿至linux内核层，要深入了解你必须苦下功夫，阅读源码。所以binder很复杂，这边简要介绍binder使用以及上层原理。</p>
+<p>Binder是Android的一个实现了Ibinder接口的类，它是一种跨进程的通信方式。在Linux内核层，它是一种虚拟的物理设备，它含有自己设备驱动在Linux内核层负责与硬件进行交互；在应用层与FrameWork层，Binder充当的是客户端与服务端进行消息交换的媒介，相当于一个中间层，对消息进行包装（封装成Binder对象），客户端就可以通过该对象来获取服务端的内容（客户端与服务端是可以随时互换的，并不是固定不变的）。</p>
+<h2 id="Android中的多进程模式"><a href="#Android中的多进程模式" class="headerlink" title="Android中的多进程模式"></a>Android中的多进程模式</h2><h3 id="多进程设置"><a href="#多进程设置" class="headerlink" title="多进程设置"></a>多进程设置</h3><p>多进程的配置很简单，只要在Manifests配置文件中，给四大组件配上android:process属性即可，配置完运行即可在AndroidStudio或者Adb命令查看到多个进程以及相应的ID。</p>
+<h3 id="多进程运行机制"><a href="#多进程运行机制" class="headerlink" title="多进程运行机制"></a>多进程运行机制</h3><p>Android会为每个进程分配一个虚拟机，不同的虚拟机在内存分配上有不同的地址空间，这就导致不同的虚拟机访问同一个类会产生多个副本。例如：进程A与进程B，类C含有一个静态属性，在进程A中将其值改变，而在进程B中读取的还是之前未改变的值，这就产生了一个同步的差异。</p>
+<p>多进程一般会产生一下几个问题：</p>
+<p>1、静态成员与单例完全失效</p>
+<p>2、线程同步机制完全失效</p>
+<p>3、SharePreference可靠性下降</p>
+<p>4、Apllication会创建多次</p>
+<p>第1与第2个问题都是因为内存地址不同造成的；第3个问题是由于多进程并发读写Xml文件，可能造成数据丢失或者错乱；第四个问题是Android系统机制决定的，每个进程都会分配一个独立的虚拟机，这个过程其实就是启动一个应用的过程</p>
+<h2 id="Android中的IPC方式"><a href="#Android中的IPC方式" class="headerlink" title="Android中的IPC方式"></a>Android中的IPC方式</h2><p>由上可知，在多进程中不能像单进程一样操作，否则会造成很多潜在的问题，必须用进程间通信来处理跨域问题，以下是常见几种IPC方式</p>
+<h3 id="使用Bundle"><a href="#使用Bundle" class="headerlink" title="使用Bundle"></a>使用Bundle</h3><p>通过Intent传递Bundle数据可用于实现组件（Activity、Service以及Receiver）之间消息通信，Bundle实现了Parceable接口，方便在不同进程间通信。Bundle支持的类型有基本类型、Parceable以及Serializable以及Android支持的特殊对象。例如：进程A的<br>aActivity直接用Intent(消息封装成Bundle对象)传递给进程B的bActivity,bActivity就能获取bundle中消息，实现进程间的通信了。</p>
+<h3 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h3><p>文件共享顾名思义就是利用文件来存储数据，然后通过对文件的读写来实现数据共享。由上可知，多进程时可能会造成高并发操作文件，导致数据错乱或者不可靠，所以文件共享适合对数据同步要求不高的进程之间通信，并且要妥善处理并发读写问题。</p>
+<h3 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h3><p>AIDL是应用接口定义语言，是用于实现进程间通信的，主要分为客户端与服务端。</p>
+<p>服务端：</p>
+<p>服务端首先要创建一个Service用来监听客户端的请求，然后创建一个AIDL文件，将暴露给客户端的接口在AIDL文件中声明，最后在Service中实现这个AIDL接口即可。</p>
+<p>客户端：</p>
+<p>客户端要做的事稍微简单点，首先需要绑定服务端的Service,绑定成功后，将服务端返回的Binder对象转换成AIDL接口所属的类型，接着就可以调用AIDL中的方法了。</p>
+<p>对于AIDL文件的创建以及具体的代码事例这里就不进行介绍了，想了解的同学可以上网查找。</p>
+<h3 id="Messeneger"><a href="#Messeneger" class="headerlink" title="Messeneger"></a>Messeneger</h3><p>Messenger可以翻译为信使，通过它可以在不同进程间传递Message对象，将数据封装成Message，就可以轻松实现进程间传递了。Messenger是一种轻量级的IPC方案，它的底层实现是aidl,它是串行执行请求的，不能并发处理多个客户端的请求，所以它只适用于一些非高并发请求的场景。如下是它的实现流程图：</p>
+<p><img src="/img/pl/ipc_messenger.png" alt=""></p>
+<h3 id="使用ContentProvider"><a href="#使用ContentProvider" class="headerlink" title="使用ContentProvider"></a>使用ContentProvider</h3><p>ContentProvider是内容提供者，对于Android开发者来说这个应该不陌生，它是四大组件之一，它的搭档是ContentResolver(内容解析者)。底层是基于binder实现的，Android系统帮我们做好了封装，我们可以很简单的就能实现IPC。实现一个ContentProvider需要继承ContentProvider类，并且重写CRUD四个方法，并对其进行注册设置标识，其它应用或者进程通过ContentResolver与标识对其进行解析，这就实现了进程间的通信了。当然ContentProvider存储的媒介是多样的，可以是数据库、文件或者其它。</p>
+<h3 id="使用Socket"><a href="#使用Socket" class="headerlink" title="使用Socket"></a>使用Socket</h3><p>Socket也成为“套接字”，是网络通信中的概念，分为流式套接字以及用户数据报套接字两种，分别对应Tcp(可靠传输)与Udp(不可靠传输)协议。socket是基于客户端/服务器模式的，服务端启动一个服务监听客户端的连接，当有客户端接进来时，就可以进行消息传递了。客户端就是配置好ip以及端口号，发送连接请求给服务端即可。当然对于服务端的设计还是有点讲究的，需要考虑到多客户端接入处理效率以及资源的回收等问题，这里就不多做描述了，有兴趣的同学可以自己尝试。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面介绍的IPC方式多种多样，对于开发者来说选择合适的IPC方式是相当重要的，如下图：</p>
+<p><img src="/img/pl/ipc_difference.png" alt=""></p>
+<p>当然Android的IPC岂是一篇博客能够讲完的，这里只是对其作了大致的介绍，对于binder、aidl以及Messenger等都没有做深入研究，有兴趣的同学可以阅读对应的源码进行研究探索。</p>
+<p>参考书籍：《Android开发艺术探索》</p>
 
-        @media (-webkit-min-device-pixel-ratio:2), (min-device-pixel-ratio: 2){
-          .border-1px:after,.border-1px:before{
-              -webkit-transform: scaleY(.5);
-              transform: scaleY(.5);
-          }
-        }
-    </style>
-</head>
-
-<body>
-    <div id="main">
-        <div id="main-section">
-            <p class="seg-words">あ行</p>
-            <!-- あ行 -->
-            <div class="input-group border-1px">
-                <label for="group-class">あ ア</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(a)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">う ウ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(u)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">お オ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(o)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <!-- か行 -->
-            <p class="seg-words">か行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">か カ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ka)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">き キ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ki)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">く ク</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ku)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">け ケ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ke)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">こ コ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ko)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- さ行 -->
-            <p class="seg-words">さ行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">さ サ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(sa)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">し シ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(shi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">す ス</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(su)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">せ セ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(se)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">そ ソ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(so)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- た行 -->
-            <p class="seg-words">た行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">た タ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ta)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ち チ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(chi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">つ ツ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(tsu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">て テ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(te)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">と ト</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(to)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- な行 -->
-            <p class="seg-words">な行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">な ナ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(na)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">に ニ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ni)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ぬ ヌ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(nu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ね ネ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ne)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">の ノ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(no)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- は行 -->
-            <p class="seg-words">は行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">は ハ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ha)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ひ ヒ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(hi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ふ フ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(fu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">へ ヘ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(he)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ほ ホ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ho)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ま行 -->
-            <p class="seg-words">ま行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ま マ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ma)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">み ミ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">む ム</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">め メ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(me)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">も モ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- や行 -->
-            <p class="seg-words">や行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">や ヤ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ya)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ゆ ユ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(yu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">よ ヨ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(yo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ら行 -->
-            <p class="seg-words">ら行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ら ラ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ra)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">り リ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ri)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">る ル</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ru)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">れ レ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(re)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ろ ロ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ro)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- わ行 -->
-            <p class="seg-words">わ行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">わ ワ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(wa)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">う ウ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(u)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">を ヲ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(wo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ン行 -->
-            <p class="seg-words">ん</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ん ン</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(n)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
       
 
       
@@ -1014,6 +209,33 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">IPC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Binder</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">AIDL</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Messenger</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -1064,7 +286,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://litten.me/assets/demo/border1px.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://litten.me/2018/06/13/blog_ipc_GitHub/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -1076,6 +298,16 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/06/blog_serialization_GitHub/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浅谈Serializable与Parcelable</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1126,7 +358,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
