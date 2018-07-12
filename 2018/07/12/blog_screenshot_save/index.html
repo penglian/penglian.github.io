@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Penglian的博客</title>
+  <title>长截图并且保存到图库 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/assets/demo/hack_demo.html">
+  <meta name="description" content="主要讲述的是长截图的实现以及保存图片通知图库更新。">
+<meta name="keywords" content="Android,长截图,图库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长截图并且保存到图库">
+<meta property="og:url" content="//plstyle.cn/2018/07/12/blog_screenshot_save/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
+<meta property="og:description" content="主要讲述的是长截图的实现以及保存图片通知图库更新。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-28T03:51:08.000Z">
+<meta property="og:updated_time" content="2018-07-12T12:08:00.220Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
+<meta name="twitter:title" content="长截图并且保存到图库">
+<meta name="twitter:description" content="主要讲述的是长截图的实现以及保存图片通知图库更新。">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -147,58 +147,37 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-blog_screenshot_save" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      长截图并且保存到图库
+    </h1>
+  
+
+        
+        <a href="/2018/07/12/blog_screenshot_save/" class="archive-article-date">
+  	<time datetime="2018-07-12T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title></title>
-	<style type="text/css">
-		h3,h4{
-			text-align: center;
-		}
-		#main{
-			width: 350px;
-			height: 100px;
-			border: 1px solid #000;
-			margin: 0 auto;
-		}
-		#main .box{
-			width: 100px;
-			height: 100px;
-			margin-left: 10px;
-			position: relative;
-			float: left;
-			background: #333;
-			color:#ddd;
-		}
-		#main .task1:hover{
-			z-index: 999;
-		}
-		#main .task2:hover{
-			z-index: 999;
-			background: #999;
-		}
-		#main .task3:hover{
-			z-index: 999;
-			background: #333;
-		}
-	</style>
-</head>
-<body>
-	<h3>三个background为#333的box</h3>
-	<h4>- 请在IE6，IE7中触发hover -</h4>
-	<div id="main">
-		<div class="box task1">box1 - 未设置backgorund</div>
-		<div class="box task2">box2 - background: #999</div>
-		<div class="box task3">box3 - background: #333</div>
-	</div>
-</body>
-</html>
+        <hr>
+<p>主要讲述的是长截图的实现以及保存图片通知图库更新。<br><a id="more"></a></p>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>由于项目需求，需要实现一个长截图保存并且通知图库更新的需求，便好好研究了一下。首先，这是两个功能点，一个是实现自定义的长截图，另一个是保存图片并且通知图库更新，后者相对来说比较简单，前者则需要一些“黑科技”。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="明确需求"><a href="#明确需求" class="headerlink" title="明确需求"></a>明确需求</h3><p>首先，得明确需求，只有理解好了需求，才能在设计程序的过程中，去兼顾通用性与扩展性，而不能拘泥于当前的需求实现。长截图的实现包括短截图、全屏截图以及长截图，所以得实现一个能自定义视图的截图方式，兼容各个方式的截图实现。图片保存并且通知图库更新，这个主要是要考虑到Android版本对于通知图库更新这块的差异，判断版本号分开处理。</p>
+<h3 id="长截图实现"><a href="#长截图实现" class="headerlink" title="长截图实现"></a>长截图实现</h3><p>这块资料在网上相对较少，一般都是全屏截图，或者是针对ListView或者ScrollView的比较复杂的实现，不通用也不简易，肯定是不可取的，所以只能放弃以上这些方式。黄天不负有心人，经过不懈的努力，终于找到了一个黑科技，简洁高效，实现代码如下：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 截取指定区域bitmap</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param view 截取区域的view</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   public <span class="keyword">Bitmap </span>getScreenShotsBitmap(View view)</span><br><span class="line">               <span class="keyword">Bitmap </span><span class="keyword">bitmap </span>= <span class="keyword">Bitmap.createBitmap(v.getWidth(), </span>v.getHeight(), <span class="built_in">Config</span>.RGB_565)<span class="comment">;</span></span><br><span class="line">               final Canvas canvas = new Canvas(<span class="keyword">bitmap);</span></span><br><span class="line"><span class="keyword"> </span>              v.draw(canvas)<span class="comment">;</span></span><br><span class="line">               return <span class="keyword">bitmap;</span></span><br><span class="line"><span class="keyword"> </span>  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码很简洁，只需要传递一个view，然后创建一个bitmap，用bitmap去创建canvas，然后调用view.draw(canvas)即可，返回的bitmap就是想要结果。</p>
+<h3 id="保存图片并且通知图库更新"><a href="#保存图片并且通知图库更新" class="headerlink" title="保存图片并且通知图库更新"></a>保存图片并且通知图库更新</h3><p>保存图片到SD卡并且通知图库更新，使得用户打开图库就能看到你刚刚保存的图片，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"> * 截屏保存到图库</span><br><span class="line"> *</span><br><span class="line"> * @param activity</span><br><span class="line"> * @param successMsg</span><br><span class="line"> * @param errorMsg</span><br><span class="line"> * @param o</span><br><span class="line"> */</span><br><span class="line">public void storeScreenShot(Activity activity, String successMsg, String errorMsg, View view)&#123;</span><br><span class="line">    Bitmap bitmap = getScreenShotsBitmap(o);</span><br><span class="line">    if (bitmap == null) &#123;</span><br><span class="line">        ToastUtils.showLongToast(activity, errorMsg);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    saveImageToGallery(activity, bitmap, successMsg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 保存图片到图库</span><br><span class="line"> *</span><br><span class="line"> * @param context</span><br><span class="line"> * @param message</span><br><span class="line"> * @param bmp</span><br><span class="line"> */</span><br><span class="line">private void saveImageToGallery(Context context, Bitmap bmp, String message) &#123;</span><br><span class="line">    // 首先保存图片</span><br><span class="line">    File appDir = new File(Environment.getExternalStorageDirectory(), &quot;cib&quot;);</span><br><span class="line">    if (!appDir.exists()) &#123;</span><br><span class="line">        appDir.mkdir();</span><br><span class="line">    &#125;</span><br><span class="line">    String fileName = System.currentTimeMillis() + &quot;.jpg&quot;;</span><br><span class="line">    File file = new File(appDir, fileName);</span><br><span class="line">    try &#123;</span><br><span class="line">        FileOutputStream fos = new FileOutputStream(file);</span><br><span class="line">        bmp.compress(CompressFormat.JPEG, 100, fos);</span><br><span class="line">        fos.flush();</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 其次把文件插入到系统图库</span><br><span class="line">    try &#123;</span><br><span class="line">        MediaStore.Images.Media.insertImage(context.getContentResolver(),</span><br><span class="line">                file.getAbsolutePath(), fileName, null);</span><br><span class="line">    &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 最后通知图库更新</span><br><span class="line">    refreshPicture(context, file.getAbsolutePath(), message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 浏览图片</span><br><span class="line"> *</span><br><span class="line"> * @param filePath</span><br><span class="line"> * @param context</span><br><span class="line"> */</span><br><span class="line">public void scanPhotos(String filePath, Context context) &#123;</span><br><span class="line">    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);</span><br><span class="line">    Uri uri = Uri.fromFile(new File(filePath));</span><br><span class="line">    intent.setData(uri);</span><br><span class="line">    context.sendBroadcast(intent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 在4.4以上，google规定了不允许第三方应用向系统发送广播，所以4.4以上需要采用MediaScannerConnection来实现</span><br><span class="line"> *</span><br><span class="line"> * @param context</span><br><span class="line"> * @param filePath</span><br><span class="line"> * @param message</span><br><span class="line"> */</span><br><span class="line">private void refreshPicture(final Context context, String filePath, String message) &#123;</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= 19) &#123;</span><br><span class="line">        MediaScannerConnection.scanFile(context,</span><br><span class="line">                new String[]&#123;filePath&#125;, new String[]&#123;&quot;image/*&quot;&#125;,</span><br><span class="line">                new MediaScannerConnection.OnScanCompletedListener() &#123;</span><br><span class="line">                    public void onScanCompleted(String path, Uri uri) &#123;</span><br><span class="line">                        context.sendBroadcast(new Intent(android.hardware.Camera.ACTION_NEW_PICTURE, uri));</span><br><span class="line">                        context.sendBroadcast(new Intent(&quot;com.android.camera.NEW_PICTURE&quot;, uri));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        scanPhotos(filePath, context);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(&quot;file://&quot; + filePath)));</span><br><span class="line">    &#125;</span><br><span class="line">    ToastUtils.showLongToast(context, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先是进行截屏操作获取bitmap,然后将bitmap转化为文件，保存到sd卡自定义的目录，将保存后的文件相关信息插入到图库系统中，通知图库更新。在refreshPicture方法通知图库更新需要做版本判断，至于原因代码中注释都很清楚，就不多说了，两段代码合起来就是一个截图保存图片并且通知图库更新的实现了。（温馨提示，由于涉及文件操作，在targetSdkVersion为6.0以及以上需要进行权限的动态申请，权限不属于该篇的范畴就不介绍了）</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>长截图一开始由于网上资料太少，钻了很多的牛角尖，花了很多的时间，后来转换了思路，利用传递View的方式，实现起来就简单多了，通用性也高，能够根据传递的View来进行截图。所以有时候遇到问题并且长时间得不到解决，应该静下来考虑换种思路去探寻，说不定就能找到好的解决方式了。</p>
+
       
 
       
@@ -206,6 +185,25 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">长截图</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">图库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -256,7 +254,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/assets/demo/hack_demo.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/07/12/blog_screenshot_save/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +266,16 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/06/blog_combine_bitmap/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CombineBitmap开源项目源码解析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -301,7 +309,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "//plstyle.cn/assets/demo/hack_demo.html",
+  id: "//plstyle.cn/2018/07/12/blog_screenshot_save/",
   owner: 'penglian',
   repo: 'penglian.github.io',
   oauth: {
@@ -334,7 +342,7 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
