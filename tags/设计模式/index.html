@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>解决部分机型(三星、魅族)相机拍摄图片倒向问题 | Penglian的博客</title>
+  <title>Tag: 设计模式 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="主要是解决部分机型（三星以及魅族部分机型）上，调用原生的相机拍摄图片倒向的问题">
-<meta name="keywords" content="android,camera,三星,魅族,ExifInterface">
-<meta property="og:type" content="article">
-<meta property="og:title" content="解决部分机型(三星、魅族)相机拍摄图片倒向问题">
-<meta property="og:url" content="//plstyle.cn/2018/07/16/blog_camera_update_down/index.html">
+  <meta name="description" content="android开发工程师一枚">
+<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Penglian的博客">
+<meta property="og:url" content="//plstyle.cn/tags/设计模式/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="主要是解决部分机型（三星以及魅族部分机型）上，调用原生的相机拍摄图片倒向的问题">
+<meta property="og:description" content="android开发工程师一枚">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-16T08:15:32.798Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决部分机型(三星、魅族)相机拍摄图片倒向问题">
-<meta name="twitter:description" content="主要是解决部分机型（三星以及魅族部分机型）上，调用原生的相机拍摄图片倒向的问题">
+<meta name="twitter:title" content="Penglian的博客">
+<meta name="twitter:description" content="android开发工程师一枚">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -147,195 +146,64 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-blog_camera_update_down" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      解决部分机型(三星、魅族)相机拍摄图片倒向问题
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/07/19/blog_pattern_principio/" class="archive-article-date">
+  	<time datetime="2018-07-19T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-19</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/07/19/blog_pattern_principio/">设计模式之——六大设计原则</a>
     </h1>
   
 
-        
-        <a href="/2018/07/16/blog_camera_update_down/" class="archive-article-date">
-  	<time datetime="2018-07-16T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>主要是解决部分机型（三星以及魅族部分机型）上，调用原生的相机拍摄图片倒向的问题<br><a id="more"></a></p>
-<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>近来在项目中遇到一个问题是部分机型调用原生相机拍摄的照片倒向了，经过测试反应大部分机型是没问题，只会在三星与个别的魅族机型上出现。看到这个一般就知道是rom定制化搞的鬼了，Android是个开源的生态系统，各个手机厂商会根据自己的需求去修改framework、c++甚至底层的代码，这就导致了市面上千奇百怪的“Android手机”了，相对于IOS开发来说，Android开发者需要在兼容性上多下功夫了。</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>一切bug与缺陷只要定位到问题，一般来说就解决一半了，剩下的就是看你采用哪种解决方式了。就算你解决不了，一般也能启动弥补方案或者尽量去避开它，当然这种情况一般是很少见的，毕竟网络是只有你想不到没有它做不到的。</p>
-<h3 id="Exif-ExifInterface简介"><a href="#Exif-ExifInterface简介" class="headerlink" title="Exif-ExifInterface简介"></a>Exif-ExifInterface简介</h3><p>Exif是一种图像文件格式，它的数据存储与JPEG格式是完全相同的。实际上Exif格式就是在JPEG格式头部插入了数码照片的信息，包括拍摄时的光圈、快门、白平衡、ISO、焦距、日期时间等各种和拍摄条件以及相机品牌、型号、色彩编码、拍摄时录制的声音以及GPS全球定位系统数据、缩略图等。</p>
-<h3 id="ExifInterface中的功能简单进行介绍"><a href="#ExifInterface中的功能简单进行介绍" class="headerlink" title="ExifInterface中的功能简单进行介绍"></a>ExifInterface中的功能简单进行介绍</h3><p>Android开发中，在对图片进行展示、编辑、发送等操作时经常会涉及Exif的操作，Android中操作Exif主要是通过ExifInterface，ExifInterface看上去是一个接口，其实是一个类，位于Android.media.ExifInterface的位置。进入ExifInterface类，发现方法很少，主要就是三个方面：读取、写入、缩略图。</p>
-<p>所以根据以上介绍可知，我们可以根据exif获取拍摄图片的旋转角度的信息再结合Matrix进行矩阵转换生成bitmap即可，代码如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 读取照片exif信息中的旋转角度</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> path 照片路径</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span>角度</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> readPictureDegree(String path) &#123;</span><br><span class="line">       <span class="keyword">int</span> degree = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           ExifInterface exifInterface = <span class="keyword">new</span> ExifInterface(path);</span><br><span class="line">           <span class="keyword">int</span> orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);</span><br><span class="line">           <span class="keyword">switch</span> (orientation) &#123;</span><br><span class="line">               <span class="keyword">case</span> ExifInterface.<span class="string">ORIENTATION_ROTATE_90:</span></span><br><span class="line">                   degree = <span class="number">90</span>;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               <span class="keyword">case</span> ExifInterface.<span class="string">ORIENTATION_ROTATE_180:</span></span><br><span class="line">                   degree = <span class="number">180</span>;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               <span class="keyword">case</span> ExifInterface.<span class="string">ORIENTATION_ROTATE_270:</span></span><br><span class="line">                   degree = <span class="number">270</span>;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> degree;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 旋转角度</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> img</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> degree</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> Bitmap turnToDegree(Bitmap img, <span class="keyword">int</span> degree)&#123;</span><br><span class="line">       Matrix matrix = <span class="keyword">new</span> Matrix();</span><br><span class="line">       matrix.postRotate(degree);</span><br><span class="line">       <span class="keyword">int</span> width = img.getWidth();</span><br><span class="line">       <span class="keyword">int</span> height =img.getHeight();</span><br><span class="line">       img = Bitmap.createBitmap(img, <span class="number">0</span>, <span class="number">0</span>, width, height, matrix, <span class="literal">true</span>);</span><br><span class="line">       <span class="keyword">return</span> img;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>相机调用以及文件保存代码中就不体现了，以上有两个方法，一个是检测旋转角度的，另外一个是根据旋转角度进行图像旋转的。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于这种厂商rom定制化产生的问题，只能是遇到一个解决一个，因为你无法预知那些厂商的心思，只能不断去积累经验。还有当无法解决的时候，有选择的话尽量避开，否则能进行异常捕获的，尽量去捕获，避免造成crash。当然具体问题还得具体分析，不能一概而论。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">camera</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">三星</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">魅族</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ExifInterface</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计原则</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/07/16/blog_camera_update_down/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/07/17/blog_rxjava2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Rxjava2学习总结
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/07/12/blog_screenshot_save/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">长截图并且保存到图库</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "//plstyle.cn/2018/07/16/blog_camera_update_down/",
-  owner: 'penglian',
-  repo: 'penglian.github.io',
-  oauth: {
-    client_id: '0b3e228857108da87e6b',
-    client_secret: '6b88d374d745b60c999ddf234a4b225eff2d0997',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-  
+    
 
 
           </div>
@@ -358,9 +226,9 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
