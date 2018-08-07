@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Tag: 设计原则 | Penglian的博客</title>
+  <title>关于代码可读性的一些见解 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="android开发工程师一枚">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/tags/设计原则/index.html">
+  <meta name="description" content="主要就是一些对代码可读性方面的一些见解与总结">
+<meta name="keywords" content="可读性,代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于代码可读性的一些见解">
+<meta property="og:url" content="//plstyle.cn/2018/08/07/blog_code_readability/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="android开发工程师一枚">
+<meta property="og:description" content="主要就是一些对代码可读性方面的一些见解与总结">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-07T11:42:46.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="android开发工程师一枚">
+<meta name="twitter:title" content="关于代码可读性的一些见解">
+<meta name="twitter:description" content="主要就是一些对代码可读性方面的一些见解与总结">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -146,64 +147,198 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-blog_code_readability" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/19/blog_pattern_principio/" class="archive-article-date">
-  	<time datetime="2018-07-19T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/19/blog_pattern_principio/">设计模式之——六大设计原则</a>
+    <h1 class="article-title" itemprop="name">
+      关于代码可读性的一些见解
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/08/07/blog_code_readability/" class="archive-article-date">
+  	<time datetime="2018-08-07T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>主要就是一些对代码可读性方面的一些见解与总结<br><a id="more"></a></p>
+<h2 id="可读性的重要性"><a href="#可读性的重要性" class="headerlink" title="可读性的重要性"></a>可读性的重要性</h2><p>编程有很多时间都在阅读代码，不仅要阅读自己的代码，还要阅读别人的代码。因此，可读性良好的代码能够大大提高编程效率。并且，可读性良好的代码往往会让架构更好，因为程序员更愿意去修改这部分代码，也更容易修改。只有在核心领域为了效率才可以放弃可读性，否则可读性是第一位。</p>
+<h2 id="可读性的体现"><a href="#可读性的体现" class="headerlink" title="可读性的体现"></a>可读性的体现</h2><p>代码可读性体现在编码设计的各个方面，包括命名、注释以及逻辑等，接下来一一进行介绍：</p>
+<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>命名一方面得表达代码含义，比如find、start、search等一些表达力比较强的单词，别人一看就知道是什么含义，当然组合词也是很常见的，比如findItem、startThread等；另一方面是不能包含歧义，起的名字不能让人产生歧义，可以适当加一些前缀（is、has）和一些后缀(able)来增强语义表达。比如</p>
+<ul>
+<li>用 min、max 表示数量范围；</li>
+<li>用 first、last 表示访问空间的包含范围；</li>
+<li>begin、end 表示访问空间的排除范围，即 end 不包含尾部</li>
+</ul>
+<h3 id="良好的代码风格"><a href="#良好的代码风格" class="headerlink" title="良好的代码风格"></a>良好的代码风格</h3><p>添加适当的缩进与换行来增强代码可读性；提高代码以及注释排列的整齐性；代码语句不能随意改变顺序，虽然可能不会影响结果，但是可读性更差，对于自己或者他人在日后阅读这块代码的时候增加了难度。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>阅读代码首先会注意到注释，如果注释没太大作用，那么就会浪费代码阅读的时间。那些能直接看出含义的代码不需要写注释，特别是并不需要为每个方法都加上注释，比如那些简单的 getter 和setter方法，为这些方法写注释反而让代码可读性更差。 </p>
+<p>当然，不能因为有注释就随便起个名字，而是争取起个好名字而不写注释。可以用注释来记录采用当前解决办法的思考过程，从而让读者更容易理解代码。</p>
+<p>注释用来提醒一些特殊情况：</p>
+<ul>
+<li><em>TODO</em>——待做</li>
+<li><em>FIXME</em>——待修复</li>
+<li><em>HACK</em>——粗糙的解决方案</li>
+<li><em>XXX</em>——危险！这里有重要的问题</li>
+</ul>
+<p>在java中可利用一些ide配置一些注释模板，写起注释更加得方便，不同的ide配置方式也不同，这里就不进行介绍了</p>
+<h3 id="控制流的可读性"><a href="#控制流的可读性" class="headerlink" title="控制流的可读性"></a>控制流的可读性</h3><p>控制流的可读性说明白点就是对一些逻辑控制的可读性，业务开发过程中，逻辑控制是肯定避免不了。对于自己开发的代码，一段时间后再去看，如果逻辑被你写得“很复杂”，那估计也是很头痛的事，要是别人去看的话，估计想哭的心情都有了，所以逻辑控制的清晰度也是很重要的。</p>
+<p>在java方面：</p>
+<ul>
+<li>尽量少用三目运算符(tag？a:b)，因为它看起来更不容易让人理解,可以用if/else来替换；</li>
+<li>尽量用while来代替do/while，因为do/while的条件在后面，不够简单明了；</li>
+<li>在循环嵌套语句中，尽量使用return、break以及continue来减少嵌套层数；</li>
+<li>拆分长表达式也是很重要的，如果一些控制条件的表达式很长并且括号很多，相信一定是很头疼的事。所以拆分长表达是必不可少的，拆分可以分为两部分，一个是单纯用变量替换子表达式，另一个是可以结合逻辑运算符来使表达式逻辑更加清晰，两者结合起来使用效果更加。</li>
+<li>减少变量的作用域，一个变量的作用域在满足需求的条件下是越小越好，当对其做修改时，影响的地方最好时一眼就能看出来，这样修改扩展就方便了。当一个变量作用域很大的时候，比如公有的全局静态变量（public static String temp），当你或者他人对其进行修改，造成的影响可想而知，因为所有的地方都能调用与使用。</li>
+</ul>
+<h3 id="单一职责"><a href="#单一职责" class="headerlink" title="单一职责"></a>单一职责</h3><p>在java层面，这个原则尤为主要，不管是类还是方法还是属性，他们应该都是单一职责的，他们只负责某一项任务或者事情，只做一件事很容易让人知道它要做的事情。</p>
+<p>任何大项目或者大工程都是由一件件小流程或者小事物组成，之所以有些项目star多，更受人学习推崇，是因为他们在事物拆分以及任务划分方面做的更好，整个代码结构更加的清晰，可读性更高，大家更愿意去学习。</p>
+<h3 id="设计简单为主"><a href="#设计简单为主" class="headerlink" title="设计简单为主"></a>设计简单为主</h3><p>一开始不要过度设计，编码过程会有很多变化，过度设计的内容到最后往往是无用的，多用标准库实现。当然还是得尽量遵从对扩展是开放，对修改是禁止的原则。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">可读性</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计原则</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">代码</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/08/07/blog_code_readability/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/07/19/blog_pattern_principio/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">设计模式之——六大设计原则</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "//plstyle.cn/2018/08/07/blog_code_readability/",
+  owner: 'penglian',
+  repo: 'penglian.github.io',
+  oauth: {
+    client_id: '0b3e228857108da87e6b',
+    client_secret: '6b88d374d745b60c999ddf234a4b225eff2d0997',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -226,9 +361,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
