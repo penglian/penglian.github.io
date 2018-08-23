@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Penglian的博客</title>
+  <title>View的事件体系简述 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/assets/demo/border1px.html">
+  <meta name="description" content="介绍Android平台View的基础知识、事件分发机制以及常见的滑动冲突与对应的处理">
+<meta name="keywords" content="View滑动,事件分发,滑动冲突">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View的事件体系简述">
+<meta property="og:url" content="//plstyle.cn/2018/08/18/blog_view_distribute/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
+<meta property="og:description" content="介绍Android平台View的基础知识、事件分发机制以及常见的滑动冲突与对应的处理">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-28T03:51:08.000Z">
+<meta property="og:image" content="//plstyle.cn/img/pl/view_relation.png">
+<meta property="og:updated_time" content="2018-08-23T08:35:51.107Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="日语50音          /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockqu">
+<meta name="twitter:title" content="View的事件体系简述">
+<meta name="twitter:description" content="介绍Android平台View的基础知识、事件分发机制以及常见的滑动冲突与对应的处理">
+<meta name="twitter:image" content="//plstyle.cn/img/pl/view_relation.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -147,866 +149,116 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-blog_view_distribute" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      View的事件体系简述
+    </h1>
+  
+
+        
+        <a href="/2018/08/18/blog_view_distribute/" class="archive-article-date">
+  	<time datetime="2018-08-18T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
-    <title>日语50音</title>
-    <style type="text/css">
-    /*main*/              html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,menu{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}html,body{-webkit-text-size-adjust:none;-webkit-touch-callout:none;vertical-align:middle;font-size:16px;background:#e6e6e6;position:relative;height:100%;font-family:Tahoma,Arial,"Microsoft Yahei",sans-serif}.clearfix:after{content:" ";display:block;clear:both;visibility:hidden;line-height:0;height:0}input::-webkit-input-placeholder{color:#aaa}a,div{-webkit-tap-highlight-color:rgba(0,0,0,0)}a,a:active,a:hover{color:#0057af;text-decoration:none}header,.header{width:215px;height:58px;background:url(http://3.url.cn/qun/create_iphone/img/sprite.png) no-repeat transparent 0 0;color:#fff;line-height:58px;padding-left:64px;font-size:24px;-webkit-transform:scale(0.82) scale(0.82);-webkit-transform-origin:0 50%}.input-group{overflow:hidden;vertical-align:middle;line-height:16px;background-color:#fff;}#main-section{position:relative;height:100%;min-height:370px;overflow:hidden;}.input-group label{width:100px;padding:10px 0 10px 12px;display:inline-block;border-right:0;float:left;color:gray;-webkit-appearance:none;height:24px;line-height:24px;}.input-group .ui-select{margin-left:115px;padding:10px 24px 10px 15px;position:relative;}.input-group .select-btn{width:100%;height:24px;line-height:24px;color:#aaa;}.input-group .select-btn span.ui-text{text-align:right;display:inline-block;width:100%;white-space:nowrap;overflow:inherit;text-overflow:ellipsis;pointer-events:none;}.input-group .select-btn span.ui-icon{display:inline-block;position:absolute;top:50%;margin:-10px 0 0 -3px;width:18px;height:20px;right:7px;}.input-group .select-btn span.ui-icon .arrow{width:18px;height:18px;position:relative;display:inline-block;float:right;background:transparent;margin-right:-5px;margin-top:1px;}.input-group .select-btn span.ui-icon .arrow div{background:#ccc;position:absolute;width:3px;height:12px;}.input-group .select-btn span.ui-icon .arrow div.arrow1{left:19px;top:12px;-webkit-transform:rotate(-45deg) translate(0,-142%);}.input-group .select-btn span.ui-icon .arrow div.arrow2{left:-5px;top:19px;-webkit-transform:rotate(45deg) translate(0,-142%);}.seg-words{color:#6d6d72;height:20px;font-size:1em;text-shadow:0 1px #fff;padding:3px 0 6px 14px;}
-                
-         /*border-1px 部分*/
-         .border-1px{
-              position: relative;
-         }
-        .border-1px:before, .border-1px:after{
-            border-top: 1px solid #c8c7cc;
-            content: ' ';
-            display: block;
-            width: 100%;
-            position: absolute;
-            left: 0;
-        }
-        .border-1px:before{
-            top: 0;
-            display: none;
-        }
-        .border-1px:after{
-            bottom: 0;
-        }
-         @media (-webkit-min-device-pixel-ratio:1.5), (min-device-pixel-ratio: 1.5){
-          .border-1px:after,.border-1px:before{
-              -webkit-transform: scaleY(.7);
-              -webkit-transform-origin: 0 0;
-              transform: scaleY(.7);
-            }
-             .border-1px:after{
-              -webkit-transform-origin: left bottom;
-            }
-        }
+        <hr>
+<p>介绍Android平台View的基础知识、事件分发机制以及常见的滑动冲突与对应的处理<br><a id="more"></a></p>
+<h2 id="View的基础知识"><a href="#View的基础知识" class="headerlink" title="View的基础知识"></a>View的基础知识</h2><h3 id="什么是View"><a href="#什么是View" class="headerlink" title="什么是View"></a>什么是View</h3><p>View是Android中所有控件的基类，不管是简单的Button以及TextView还是复杂的RelativeLayout与ListView，它们的共同基类都是View。所以说View是一种界面层的控件的一种抽象，它代表了一个控件。除了View，还有ViewGroup，顾名思义，它内部包含了很多控件，ViewGroup也是继承自View，这意味着View本身就可以是单个控件也可以是多个控件组成的一组控件，通过这种关系就形成了View树的结构，这个和Web中的DOM树的概念很相似。View就相当于Dom中的节点，它可以是单个的View，也可以是包含View的ViewGroup。所以说Android界面构成实质上就是View树的绘制。</p>
+<h3 id="View的位置参数"><a href="#View的位置参数" class="headerlink" title="View的位置参数"></a>View的位置参数</h3><p>View的位置主要由它的四个顶点来决定，分别对应于View的四个属性：top、left、right、buttom，其中（left,top）代表左上角的坐标，(right,bottom)代表右下角的坐标,需要注意的是，这些坐标都是相对于父容器来说的，它是一种相对坐标，View的坐标和父容器的关系如下图：</p>
+<p><img src="/img/pl/view_relation.png" alt=""></p>
+<p>在Android中，x轴和Y轴的正方向分别为向右与向下，这点不难理解，不仅仅是Android，大部分显示系统都是按照这个标准来定义坐标的。由图可知：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span> = right - left<span class="comment">;</span></span><br><span class="line"><span class="attribute">height</span> = bottom - top<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>View的四个参数对应的获取方法分别为：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">left</span> = getLeft()<span class="comment">;</span></span><br><span class="line"><span class="attribute">right</span> = getRight()<span class="comment">;</span></span><br><span class="line"><span class="attribute">top</span> = getTop()<span class="comment">;</span></span><br><span class="line"><span class="attribute">bottom</span> = getBottom()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>在Android3.0新增了几个参数，x、y、translationX以及translationY,其中x与y是View左上角的坐标，而translationX与translationY是View左上角相对于父容器的偏移量，这几个参数也是相对于父容器，而translationX与translationY的默认值为0，和View的四个基本参数一样，View也为其提供了get/set方法，这个参数的换算关系如下：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">x</span> = left + translationX;</span><br><span class="line"><span class="attribute">y</span> = top + translationY;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，在平移的过程中，top与left分别代表的是原始左上角的位置信息，其值并不会改变，此时变化的是x、y、translationX以及translationY这四个参数。</p>
+<h3 id="MotionEvent与TouchSlop"><a href="#MotionEvent与TouchSlop" class="headerlink" title="MotionEvent与TouchSlop"></a>MotionEvent与TouchSlop</h3><h4 id="MotionEvent"><a href="#MotionEvent" class="headerlink" title="MotionEvent"></a>MotionEvent</h4><p>在手指触摸屏幕后所产生的一系列事件中，典型的事件类型有以下几种：</p>
+<ul>
+<li>ACTION_DOWN——手指刚接触屏幕</li>
+<li>ACTION_MOVE——手指在屏幕滑动</li>
+<li>ACTION_UP——手指从屏幕上松开的瞬间</li>
+</ul>
+<p>正常情况下，一次手指触摸屏幕的行为会触发一系列点击事件，考虑如下几种情况：</p>
+<ul>
+<li>点击屏幕后松开，事件顺序为DOWM——UP;</li>
+<li>点击屏幕后滑动一会松开，事件顺序为DOWN——MOVE——MOVE…——UP；</li>
+</ul>
+<p>上述三种情况是典型的事件序列，通过可以通过MotionEvent得到点击事件发生的x以及Y坐标。为此，系统提供了两组方法：getX/getY以及getRawX/getRawY。它们的区别很简单，前者返回的是相对于当前View左上角的x和y的坐标，而后者返回的是相对于手机屏幕左上角的x和y的坐标</p>
+<h4 id="TouchSlop"><a href="#TouchSlop" class="headerlink" title="TouchSlop"></a>TouchSlop</h4><p>TouchSlop是系统所能识别出的被认为是滑动的最小距离，换句话说，当手指在屏幕上滑动时，如果两次的滑动之间的距离小于这个常量,那么系统就不认为你是在进行滑动操作。原因很简单，滑动距离太小，系统不认为这是一个滑动操作。这是一个常量，和设备有关，在不同的设备上这个值可能是不同的，通过如下方式可以获取这个常量:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ViewConfigution</span><span class="selector-class">.get</span>(<span class="selector-tag">getContext</span>())<span class="selector-class">.getScaleTouchSlop</span>()</span><br></pre></td></tr></table></figure></p>
+<p>这个常量有什么意义呢？当我们在处理滑动时，可以利用这个常量来做一些过滤，比如当两次滑动事件的滑动距离小于这个值，我们就可以认为未达到滑动距离的临界值，因此就可以认为它们不是滑动，这样做可以有更好的用户体验。</p>
+<h3 id="VelocityTracker、GestureDetector和Scroller"><a href="#VelocityTracker、GestureDetector和Scroller" class="headerlink" title="VelocityTracker、GestureDetector和Scroller"></a>VelocityTracker、GestureDetector和Scroller</h3><h4 id="VelocityTracker"><a href="#VelocityTracker" class="headerlink" title="VelocityTracker"></a>VelocityTracker</h4><p>速度追踪，用于追踪手指在滑动过程中的速度，包括水平与垂直方向的速度。它的使用过程很简单，首先，在View的onTouchEvent方法中追踪当前点击事件的速度：<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表示单位时间内像素数</span></span><br><span class="line">VelocityTracker velocityTracker = VelocityTracker.obtain();</span><br><span class="line">velocityTracker.addMovement(<span class="keyword">event</span>);</span><br><span class="line">velocityTracker.computeCurrentVelocity(<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">int</span> xVelocity = (<span class="keyword">int</span>)velocityTracker.getXVelocity();</span><br><span class="line"><span class="keyword">int</span> yVelocity = (<span class="keyword">int</span>)velocityTracker.getYVelocity();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不用的话就将其释放</span></span><br><span class="line">velocityTracker.<span class="keyword">clear</span>();</span><br><span class="line">velocityTracker.recycle();</span><br></pre></td></tr></table></figure></p>
+<h4 id="gestureDetector"><a href="#gestureDetector" class="headerlink" title="gestureDetector"></a>gestureDetector</h4><p>手势检测，用于辅助检测用户的单机、滑动、长按、双击等行为。使用GestureDetector很简单，只需要创建一个GestureDetector对象并且实现OnGestureListener接口，接着接管onTouchEvent方法，具体实现如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GestureDetector mGestureDetector = <span class="keyword">new</span> GesTureDector(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">//解决长按屏幕无法拖动的现象</span></span><br><span class="line">mGestureDetector.setIsLongpressEnabled(<span class="keyword">false</span>);</span><br><span class="line"><span class="comment">//在待监听的View的onTouchEvent方法中实现如下：</span></span><br><span class="line"><span class="keyword">boolean</span> consume = mGestureDetector.onTouchEvent(event);</span><br><span class="line"><span class="keyword">return</span> consume;</span><br></pre></td></tr></table></figure></p>
+<p>当然，OnGestureListener还有很多回调方法，这里就不一一介绍了。</p>
+<h4 id="Scroller"><a href="#Scroller" class="headerlink" title="Scroller"></a>Scroller</h4><p>弹性滑动对象，用于实现View的弹性滑动。我们知道，当使用View的scrollBy或者scrollTo方法来进行滑动时，其过程时瞬间完成的，这个没有过渡效果的滑动用户体验不好。它的典型代码时固定的，具体实现如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Scroller scroller = <span class="keyword">new</span> Scroller(mContext);</span><br><span class="line"><span class="comment">//缓慢滑动到指定位置</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">smoothScroller</span><span class="params">(<span class="keyword">int</span> destX, <span class="keyword">int</span> destY)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> scrollX = getScrollX();</span><br><span class="line">    <span class="keyword">int</span> delta = destX - scrollX;</span><br><span class="line">    <span class="comment">//1000ms内滑动到destX,效果就是慢慢滑动</span></span><br><span class="line">    mScroller.startScroll(scrollX,<span class="number">0</span>,delta,<span class="number">0</span>,<span class="number">1000</span>);</span><br><span class="line">    <span class="comment">//startScroll只是做了更新数据，真正进行滑动是由invalidate()方法执行的</span></span><br><span class="line">    invalidate();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mScroller.computeScrollOffset())&#123;</span><br><span class="line">        scrollTo(mScroller.getCurrX(),mScroller.getCurrY());</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>补充说明以下，弹性滑动除了可以使用Scroller实现，还可以使用动画以及延时策略。使用动画只要为其设置一个执行动画的时间值即可，而延迟策略就是采用postDelay或者sleep等方法延迟执行滑动动作，从而可以实现弹性滑动的效果。</p>
+<h2 id="View的滑动"><a href="#View的滑动" class="headerlink" title="View的滑动"></a>View的滑动</h2><p>View的滑动，在Android设备上，滑动几乎是应用的标配，不管是下拉刷新还是SlidingMenu，它们的基础都是滑动。从另一方面说，Android手机屏幕比较小，为了给用户呈现更多的内容，就需要滑动来显示与隐藏一些内容。由此可见，滑动在Android开发中是多么的重要。</p>
+<h3 id="scrollTo与scrollBy"><a href="#scrollTo与scrollBy" class="headerlink" title="scrollTo与scrollBy"></a>scrollTo与scrollBy</h3><p>scrollTo与scrollBy是View提供的两个实现滑动的方法，scrollBy的内部实现也是scrollTo，只是入参不同而已，只不过scrollBy是基于当前位置的滑动，而scrollTo是基于所传参数的绝对滑动。</p>
+<h3 id="使用动画"><a href="#使用动画" class="headerlink" title="使用动画"></a>使用动画</h3><p>动画本身就支持平移等操作，平移就是一种滑动，使用动画来移动View,主要就是操作View的translationX以及translationY属性，既可以使用传统的View动画，也可以使用属性动画（属性动画是在Android3.0引入的，如果对Android版本要求不高，优先使用属性动画。）</p>
+<h3 id="改变布局参数"><a href="#改变布局参数" class="headerlink" title="改变布局参数"></a>改变布局参数</h3><p>改变布局参数，即改变LayoutParam。<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MarginLayoutParam <span class="built_in">param</span> = (MarginLayoutParam)button.getLayoutParam();</span><br><span class="line"><span class="built_in">param</span>.width += <span class="number">10</span>;</span><br><span class="line"><span class="built_in">param</span>.leftMargin += <span class="number">100</span>;</span><br><span class="line">button.setLayoutParam(<span class="built_in">param</span>);</span><br><span class="line"><span class="comment">//或者button.requestLayout()；</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="各种滑动方式对比"><a href="#各种滑动方式对比" class="headerlink" title="各种滑动方式对比"></a>各种滑动方式对比</h3><p>先看scrollTo/scrollBy这种方式，它是View提供的原生的方法，其作用是专门用于View的滑动，它可以比较方便的实现滑动效果并且不影响内部元素的点击事件。但它的最大缺点也是很显然：它只能滑动View的内容，不能滑动View本身以及View在布局中的位置。</p>
+<p>动画来实现滑动的话，要分情况，如果是Android3.0以上的话，用属性动画来实现，没有什么明显的缺点；如果是View的动画或者在Android3.0以下使用属性动画，均不能改变View的属性。在实际使用中，如果动画不影响交互的话，那么使用动画来做滑动是比较合适的，否则不合适。但是动画有个很明显的优点，那就是一些复杂的效果必须要用动画来实现。</p>
+<p>使用改变布局的这种方式，除了使用起来比较麻烦，也没有明显的缺点，它的主要适用对象是一些具有交互性的View，因为这些View需要和用户交互，使用动画就会有问题。</p>
+<p>所以总结以下就是：</p>
+<ul>
+<li>scrollTo/scrollBy:操作简单，适合对View内容的滑动</li>
+<li>动画：操作简单，主要使用于没有交互的View以及复杂的动画效果</li>
+<li>改变布局参数：操作稍微复杂，适用于有交互的View</li>
+</ul>
+<h2 id="事件分发机制"><a href="#事件分发机制" class="headerlink" title="事件分发机制"></a>事件分发机制</h2><h3 id="点击事件的传递规则"><a href="#点击事件的传递规则" class="headerlink" title="点击事件的传递规则"></a>点击事件的传递规则</h3><p>在介绍点击事件的传递规则前，首先我们要明白这里要分析的对象是MotionEvent，即点击事件。所谓点击事件的分发，其实就是对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递过程就是分发过程。点击事件的分发由三个很重要的方法来共同完成:dispatchTouchEvent、onInterceptTouchEvent和onTouchEvent。</p>
+<ul>
+<li>dispatchTouchEvent:用来进行事件分发。如果事件能够到达当前View，那么此方法一定会被调用，返回结果受当前View以及下级的dispatchTouchEvent方法的影响，表示是否消耗当前事件。</li>
+<li>onInterceptTouchEvent:在dispatchTouchEvent方法中调用，用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列中，此方法不会被再次调用，返回结果表示是否拦截此事件。</li>
+<li>onTouchEvent:在dispatchTouchEvent方法中调用，用来处理点击事件，返回结果表示是否消耗当前事件，如果不消耗，则在用一个事件序列，当前事件无法再次接收到事件。</li>
+</ul>
+<p>三个方法之间的关系用伪代码表示如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(onInterceptTouchEvent(e))&#123;</span><br><span class="line">        consume = onTouchEvent(e);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        consume = child.dispatchTouchEvent(e);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> consume;</span><br></pre></td></tr></table></figure></p>
+<h4 id="传递规则"><a href="#传递规则" class="headerlink" title="传递规则"></a>传递规则</h4><p>对于根ViewGroup来说，点击事件产生后，首先会传递给它，这时它的dispatchTouchEvent就会被调用，如果这个ViewGroup的onInteceptTouchEvent返回true就表示它要拦截当前事件，接着这个事件就会这个ViewGroup来处理，即它的的onTouchEvent方法就会被调用；如果这个onInterceptTouchEvent方法返回false，就表示它不拦截当前事件，这时当前事件就会继续传递给它的子元素，接着子元素的dispacthTouchEvent方法就会被调用，如此反复直到事件被最终处理为止。</p>
+<p>当一个View处理事件时，如果它设置了OnTouchListener，那么OnTouchListenr中的onTouch方法就会被调用。这时事件如何处理还要看onTouch的返回值，如果返回false，则当前View的onTouchEvent方法会被调用；如果返回true，那么onTouchEvent方法将不会被调用。由此可见，给View设置的onTouchListener，其优先级比onTouchEvent要高。在onTouchEvent方法中，如果当前方法有设置OnClickListener，那么它的onClick方法将被调用。可以看出，平时我们常用的OnClickListener，其优先级最低，即处于事件传递的尾端。</p>
+<p>当一个事件产生后，它的传递过程遵循如下顺序：Activity-&gt;Window-&gt;View，即事件总是先传递给Activity，Activity在传给Window，最后Window再传递给View。顶级View接收到事件后，就会按照事件分发机制去分发事件。考虑一种情况，如果一个View的OnTouchEvent返回false，那么它的父容器的onTouchEvent将被调用，依次类推。如果所有的元素都不处理这个事件，那么这个事件最终将会交给Activity来处理，即Activity的onTouchEvent方法将会被调用。这个过程其实很好理解，我们换一种思路，加入点击事件是一个难题，这个难题被上级领导分配给了一个程序员去处理（这是事件分发过程），结果这个程序员搞不定（onTouchEvent方法返回了false），现在该怎么办呢？难题必须要解决，那只能交由水平更高的上级去解决（上级的onTouchEvent被调用），如果上级再搞不定，那只能交由上级的上级去解决，就这样将难题一层层的往上抛，这是公司内部一种很常见的处理问题的机制。从这个角度来看，View的事件传递还是还贴近现实的，毕竟程序员也生活在现实生活中。</p>
+<p>关于事件传递的机制，这里给出一些结论，根据这些结论可以更好的理解整个传递机制：</p>
+<ul>
+<li>同一个事件序列是指从手指接触屏幕的那一刻起，到手指离开屏幕的那一刻结束，在这个过程所产生的一系列的事件，这个事件序列以down开始，中间含有数量不定的move事件，最终以up事件结束。</li>
+<li>正常情况下，一个事件序列只能被一个View拦截且消耗。这一条的原因可以参考（3），因为一旦一个元素拦截了此事件，那么同一个事件序列的所有事件都会直接交由它处理，因此同一个事件序列中的事件不能同时由两个View处理，但是通过特殊的手段可以做到，比如一个View将本该自己处理的事件通过onTouchEvent强行传递给其它的View处理。</li>
+<li>某个View一旦决定开始拦截，那么这一个事件序列都只能由它来处理（如果事件序列能够传递给它的话），并且它的onInteceptTouchEvent不会再被调用。这条也很好理解，就是说当一个View决定拦截一个事件后，那么系统会把同一个事件序列内的方法都直接交由它来处理，因此就不用再调用这个View的onInterceptTouchEvent去询问它是否要拦截了。</li>
+<li>某个View事件一旦开始处理事件，如果它不消耗ACTION_DOWN事件（onTouchEvent返回了false），那么同一事件序列中的其它事件都不会交给他处理，并且事件将重新交给他的父元素去处理，即父元素的onTouchEvent会被调用。意思就是一个事件一旦交给一个View处理，那么它就必须消耗掉，否则同一事件序列中剩下的事件就不在交给它处理了，这就好比上级交给程序员一件事，如果这件事没有处理好，短期内这个上级就不敢把事件交给这个程序员做了，二者是类似的道理。</li>
+<li>如果View不消耗除了ACTION_DOWN以外的其它点击事件，那么这个点击事件就会消失，此时父元素的onTouchEvent并不会被调用，并且当前View可以持续收到后续的事件，最终这些消失的点击事件会传递给Activity处理。</li>
+<li>ViewGroup默认不拦截任何事件。Android源码中ViewGroup的onInterceptTouchEvent方法默认返回false。</li>
+<li>View没有onInterceptTouchEvent方法，一旦有点击事件传递给它，那么它的onTouchEvent方法就会被调用。</li>
+<li>View的onTouchEvent默认都会消耗事件（即返回true）,除非它是不可点击的（clickable和longClickable为false)。View的longClickable默认为false，clickable要分情况，比如Button的clickable属性默认为true，而TextView的clickable属性默认为false。</li>
+<li>View的enable属性不影响onTouchEvent的默认返回值。哪怕一个View是disable状态的，只要它的clickable或者longClickable为true，那么它的onTouchEvent就返回true。</li>
+<li>onClick能发生的前提是View是可点击的，并且它受到了down与up的事件。</li>
+<li>事件传递过程是由外向内的，即事件总是先传递给父元素，然后再有父元素分发给子View，通过requestDisallowInteceptTouchEvent方法可以在子元素中干预父元素的事件分发过程，但是ACTION_DOWN事件除外。</li>
+</ul>
+<h2 id="滑动冲突"><a href="#滑动冲突" class="headerlink" title="滑动冲突"></a>滑动冲突</h2><p>相信开发Android的都会有这种体会：滑动冲突太坑人了，本来网上下载好的demo好好的，但是只要出现滑动冲突，demo就无法正常工作了。那么滑动冲突时如何产生的呢？其实在界面中，只要内外两层可以同时滑动，这个时候就会产生滑动冲突。如何解决滑动冲突呢？这既是一件困难的事又是一件简单的事，说困难是因为很多开发者面对滑动冲突都会显得束手无策，说简单是因为滑动冲突的解决有固定的套路，只要知道了这个套路问题就好解决了。</p>
+<h3 id="常见的滑动冲突场景"><a href="#常见的滑动冲突场景" class="headerlink" title="常见的滑动冲突场景"></a>常见的滑动冲突场景</h3><p>常见的滑动冲突可以分为以下三种：</p>
+<ul>
+<li>场景1——外部滑动方向与内部滑动方向不一致</li>
+<li>场景2——外部滑动方向与内部滑动方向一致</li>
+<li>上面两种情况的嵌套</li>
+</ul>
+<p>先说场景1，主要是将ViewPager与Fragment配合使用所组成的页面滑动效果，主流应用几乎都会使用这个效果。在这种效果中，可以通过左右滑动来切换页面，而每个页面内部又嵌套了一个ListView。本来这种情况是有滑动冲突的，但是ViewPager内部处理了这个滑动冲突，因此采用ViewPager时我们无须关注此问题。如果我们采用的不是ViewPager而是ScrollView等，那就必须手动处理滑动冲突了，否则造成的后果就是内外两层只有一层能进行滑动，这是因为两者之间的滑动事件有冲突。除了这种典型情况外，还存在其它的情况，比如外部上下滑动，内部左右滑动等，但是它们属于同一类滑动冲突。</p>
+<p>再说场景2，这种情况稍微复杂些，当内外两层都在同一个方向可以进行滑动时，显然存在逻辑问题。因为当手指开始滑动时，系统无法知道用户到底是想让哪一层滑动，所以当手指滑动的时候就会出现问题，要么只有一层滑动，要么就是两层都滑动但是很卡顿。在实际开发中，这种场景主要是指内外两层同时上下滑动或者内外层同时左右滑动。</p>
+<p>最后说下场景3，其实就是上面两种情况的嵌套，因此场景3的滑动冲突看起来就更复杂了。虽然说场景3滑动冲突看起来很复杂，但是它是几个单一滑动冲突的叠加，因此只需要处理内层和中层、中层与外层之间的滑动冲突即可，而具体的处理方法其实是和场景1、场景2相同的。</p>
+<p>从本质上讲，这三种滑动冲突场景的复杂度其实是相同的，因为它们的区别仅仅是滑动策略的不同，至于解决滑动冲突的方法，它们几个是通用的，以下篇幅会做相应的介绍。</p>
+<h3 id="滑动冲突的处理规则"><a href="#滑动冲突的处理规则" class="headerlink" title="滑动冲突的处理规则"></a>滑动冲突的处理规则</h3><p>一般来说，不管滑动冲突多么复杂，它都有既定的规则，根据这些规则我们可以选择合适的方法去处理。</p>
+<p>对于场景1，它的处理规则是：当用户左右滑动时，需要让外部的View拦截点击事件，当用户上下滑动时，需要让内部的View拦截点击事件。这个时候我们就可以根据它的特征来解决滑动冲突，具体来说是：根据滑动是水平滑动还是竖直滑动来判断到底是谁来拦截事件。根据滑动过程中两个点之间的坐标就可以得出到底是水平还是竖直滑动。简单来说，可以有很多的参考，依据滑动路径与水平方向上的夹角，也可以一句水平方向与竖直方向的距离差来判定，某些特殊时候还可以依据水平与竖直方向的速度差来判断。选用规则可以结合具体场景来选择。</p>
+<p>对于场景2，比较特殊，无法根据角度、距离差以及速度差来判断，但是这个时候一般都能在业务上找到突破点，比如业务上规定：当处于某种状态时需要外部View响应用户的滑动，而处于另外一种状态时需要内部View来响应View的滑动，根据这种业务需求我们也能指定出相应的处理规则，有了处理规则同样可以进行下一步的处理。</p>
+<p>对于场景3，它的滑动规则更复杂了，和场景2一样，它也无法根据角度、距离差以及速度差来判断，同样还是只能从业务上找突破点，具体方法和场景2一样，都是从业务的需求得出对应的处理规则。</p>
+<h3 id="滑动冲突的解决方式"><a href="#滑动冲突的解决方式" class="headerlink" title="滑动冲突的解决方式"></a>滑动冲突的解决方式</h3><p>首先我们分析滑动场景，这也是最简单、最典型的滑动冲突，因为它的滑动规则比较简单，不过多复杂的滑动冲突，它们之间的区别仅仅是滑动规则不同而已。抛开滑动规则不说，我们需要找到一种不依赖具体滑动的滑动规则的通用的解决方法，在这里我们需要根据场景1得出通用的解决方案，然后场景2、3只需要修改有关滑动规则的逻辑即可。</p>
+<h4 id="外部拦截法"><a href="#外部拦截法" class="headerlink" title="外部拦截法"></a>外部拦截法</h4><p>所谓外部拦截法是指点击事件都先经过父容器的拦截处理，如果父容器需要此事件就进行拦截，如果不需要此事件就不拦截，这样就可以解决滑动冲突问题，这种方法比较符合事件的分发机制。外部拦截法需要重写父容器的onteceptTouchEvent方法，在内部做相应的拦截即可，伪代码如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> boolean <span class="title">onInterceptTouchEvent</span>(<span class="params">MotionEvent <span class="keyword">event</span></span>)</span>&#123;</span><br><span class="line">    boolean intecepted = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="keyword">event</span>.getX();</span><br><span class="line">    <span class="keyword">int</span> y = <span class="keyword">event</span>.getY();</span><br><span class="line">    <span class="keyword">switch</span>(<span class="keyword">event</span>.getAction())&#123;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">          inteceped = <span class="literal">false</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_MOVE：</span><br><span class="line">          <span class="keyword">if</span>(<span class="string">"父容器需要拦截此事件"</span>）</span><br><span class="line">            intecepted =<span class="literal">true</span>;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">            intecepted = <span class="literal">false</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">          intecepted = <span class="literal">false</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> intecepted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码是外部拦截法的典型逻辑，针对不同的滑动冲突，只需要修改父容器需要当前点击事件这个条件即可，其它均不需做修改并且也不能修改。这里对上述代码在描述一下，在onInteceptTouchEvent方法中，首先是ACTION_DOWN事件，父容器必须返回false，即不拦截此事件，这是因为一旦父容器拦截了此事件，后续的事件都会直接交由父容器处理，这个时候事件就没办法再传递给子元素了；其次是ACTION_MOVE事件，这个事件可以根据需要来决定是否需要拦截，如果父容器需要拦截就返回true，否则返回false；最后是ACTIO_UP事件，这里必须返回false，因为ACTION_UP事件本身没有太多意义。</p>
+<p>考虑一种情况，假设事件交由子元素处理，如果父容器再ACTION_UP时返回了true，就会导致子元素无法接收到ACTION_UP事件，这个时候子元素的onClick方法就无法触发，但是父容器比较特殊，一旦它开始拦截任何一个事件，那么后续的事件都会交由它处理，而ACTION_UP作为最后一个事件也必定可以传递给父容器，即便父容器的onInteceptTouchEvent方法方法在ACTION_UP中返回了false。</p>
+<h4 id="内部拦截法"><a href="#内部拦截法" class="headerlink" title="内部拦截法"></a>内部拦截法</h4><p>内部拦截法是指父容器不拦截任何事件，所有的事件都交由子元素，如果子元素需要此事件就消耗掉，否则就交由父容器处理，这种  方法和Android中的事件分发不一致，需要配合requestDisallowInteceptTouchEvent方法才能正常工作，使用起来较外部拦截法稍显复杂。伪代码如下,我们需要重写dispatchTouchEvent方法:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> boolean <span class="title">onInterceptTouchEvent</span>(<span class="params">MotionEvent <span class="keyword">event</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="keyword">event</span>.getX();</span><br><span class="line">    <span class="keyword">int</span> y = <span class="keyword">event</span>.getY();</span><br><span class="line">    <span class="keyword">switch</span>(<span class="keyword">event</span>.getAction())&#123;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">          parent.requestDisallowInteceptTouchEvent(<span class="literal">true</span>);</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_MOVE：</span><br><span class="line">          <span class="keyword">if</span>(<span class="string">"父容器需要此类点击事件"</span>)</span><br><span class="line">            parent.requestDisallowInteceptTouchEvent(<span class="literal">false</span>);</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> super.dispatchTouchEvent(<span class="keyword">event</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述代码是内部拦截法的典型代码，当面对不同的滑动策略时只需要修改里面的条件即可，其它不需要改动而且也不能改动。除了子元素需要做特殊处理外，父元素也要默认拦截除了ACTION_DOWN以外的其它事件，这样当子元素调用parent.requestDisallowInteceptTouchEvent(false)时，父元素才能继续拦截所需的事件。</p>
+<p>为什么父容器不能拦截ACTION_DOWN事件呢？那是因为ACTION_DOWN事件并不受FLAG_DISALLOW_INTERCEPT这个标记位控制，所以一旦父容器拦截ACTION_DOWN事件，那么所有的事件都无法传到子元素中了，这样内部拦截就不起作用了。父元素所作修改如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> boolean <span class="title">onInterceptTouchEvent</span>(<span class="params">MotionEvent <span class="keyword">event</span></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">int</span> action = <span class="keyword">event</span>.getAction();</span><br><span class="line">     <span class="keyword">if</span>(action == MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">     &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="滑动冲突总结"><a href="#滑动冲突总结" class="headerlink" title="滑动冲突总结"></a>滑动冲突总结</h4><p>所以对于滑动冲突，内部拦截法与外部拦截法都适用，当面对不同的滑动策略时只需要修改里面的条件即可，外部拦截法相对内部拦截法来说更简单更容易理解，可以优先考虑使用。</p>
+<p>参考书籍: 《Android开发艺术探索》   </p>
 
-        @media (-webkit-min-device-pixel-ratio:2), (min-device-pixel-ratio: 2){
-          .border-1px:after,.border-1px:before{
-              -webkit-transform: scaleY(.5);
-              transform: scaleY(.5);
-          }
-        }
-    </style>
-</head>
-
-<body>
-    <div id="main">
-        <div id="main-section">
-            <p class="seg-words">あ行</p>
-            <!-- あ行 -->
-            <div class="input-group border-1px">
-                <label for="group-class">あ ア</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(a)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">う ウ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(u)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">お オ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(o)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <!-- か行 -->
-            <p class="seg-words">か行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">か カ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ka)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">き キ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ki)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">く ク</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ku)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">け ケ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ke)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">こ コ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ko)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- さ行 -->
-            <p class="seg-words">さ行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">さ サ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(sa)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">し シ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(shi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">す ス</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(su)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">せ セ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(se)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">そ ソ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(so)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- た行 -->
-            <p class="seg-words">た行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">た タ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ta)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ち チ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(chi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">つ ツ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(tsu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">て テ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(te)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">と ト</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(to)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- な行 -->
-            <p class="seg-words">な行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">な ナ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(na)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">に ニ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ni)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ぬ ヌ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(nu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ね ネ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ne)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">の ノ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(no)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- は行 -->
-            <p class="seg-words">は行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">は ハ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ha)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ひ ヒ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(hi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ふ フ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(fu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">へ ヘ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(he)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ほ ホ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ho)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ま行 -->
-            <p class="seg-words">ま行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ま マ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ma)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">み ミ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mi)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">む ム</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">め メ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(me)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">も モ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(mo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- や行 -->
-            <p class="seg-words">や行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">や ヤ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ya)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ゆ ユ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(yu)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">よ ヨ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(yo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ら行 -->
-            <p class="seg-words">ら行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ら ラ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ra)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">り リ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ri)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">る ル</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ru)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">れ レ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(re)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">ろ ロ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(ro)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- わ行 -->
-            <p class="seg-words">わ行</p>
-            <div class="input-group border-1px">
-                <label for="group-class">わ ワ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(wa)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">い イ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(i)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">う ウ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(u)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">え エ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(e)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-            <div class="input-group border-1px">
-                <label for="group-class">を ヲ</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(wo)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-
-            <!-- ン行 -->
-            <p class="seg-words">ん</p>
-            <div class="input-group border-1px">
-                <label for="group-class">ん ン</label>
-                <div class="ui-select">
-                    <div class="select-btn">
-                        <span class="ui-text">(n)</span>
-                        <span class="ui-icon">
-                            <div class="arrow">
-                                <div class="arrow1"></div>
-                                <div class="arrow2"></div>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="group-class" class="ui-select-holder" data-catalog="0"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
       
 
       
@@ -1014,6 +266,25 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">View滑动</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">事件分发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">滑动冲突</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -1064,7 +335,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/assets/demo/border1px.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/08/18/blog_view_distribute/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -1076,6 +347,16 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/07/blog_code_readability/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于代码可读性的一些见解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1109,7 +390,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "//plstyle.cn/assets/demo/border1px.html",
+  id: "//plstyle.cn/2018/08/18/blog_view_distribute/",
   owner: 'penglian',
   repo: 'penglian.github.io',
   oauth: {
@@ -1142,7 +423,7 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
