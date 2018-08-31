@@ -8,11 +8,13 @@
   <link rel="dns-prefetch" href="//plstyle.cn">
   <title>java并发简述 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="并发,并行,线程安全">
+  <meta name="description" content="介绍java中并发相关的线程（Thread）、线程池、线程同步以及协作、java内存模型以及锁相关的内容。">
+<meta name="keywords" content="并发,并行,线程安全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java并发简述">
 <meta property="og:url" content="//plstyle.cn/2018/08/30/blog_concurrence/index.html">
 <meta property="og:site_name" content="Penglian的博客">
+<meta property="og:description" content="介绍java中并发相关的线程（Thread）、线程池、线程同步以及协作、java内存模型以及锁相关的内容。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="//plstyle.cn/img/pl/concurrence_thread_status.png">
 <meta property="og:image" content="//plstyle.cn/img/pl/concurrence_countdownLatch.png">
@@ -25,9 +27,10 @@
 <meta property="og:image" content="//plstyle.cn/img/pl/concurrence_memory_atom.png">
 <meta property="og:image" content="//plstyle.cn/img/pl/concurrence_memory_atom2.png">
 <meta property="og:image" content="//plstyle.cn/img/pl/concurence_threadLocal.png">
-<meta property="og:updated_time" content="2018-08-31T07:56:22.219Z">
+<meta property="og:updated_time" content="2018-08-31T08:03:56.014Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java并发简述">
+<meta name="twitter:description" content="介绍java中并发相关的线程（Thread）、线程池、线程同步以及协作、java内存模型以及锁相关的内容。">
 <meta name="twitter:image" content="//plstyle.cn/img/pl/concurrence_thread_status.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
@@ -177,7 +180,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<a id="more"></a>
+<p>介绍java中并发相关的线程（Thread）、线程池、线程同步以及协作、java内存模型以及锁相关的内容。<br><a id="more"></a></p>
 <h2 id="一、简述"><a href="#一、简述" class="headerlink" title="一、简述"></a>一、简述</h2><p>介绍java中并发相关的线程（Thread）、线程池、线程同步以及协作、java内存模型以及锁相关的内容。</p>
 <h2 id="名词解析"><a href="#名词解析" class="headerlink" title="名词解析"></a>名词解析</h2><h3 id="并行与并发"><a href="#并行与并发" class="headerlink" title="并行与并发"></a>并行与并发</h3><ul>
 <li>并发的实质是一个物理CPU（也可以是多个物理CPU）在若干个程序之间多路复用，并发性是对有限物理资源强制行使 多用户共享以提高效率。</li>
