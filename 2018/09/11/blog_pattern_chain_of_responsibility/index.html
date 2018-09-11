@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Tag: ExifInterface | Penglian的博客</title>
+  <title>设计模式——责任链模式 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="android开发工程师一枚">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/tags/ExifInterface/index.html">
+  <meta name="description" content="介绍设计模式中责任链模式相关的内容。">
+<meta name="keywords" content="责任链模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——责任链模式">
+<meta property="og:url" content="//plstyle.cn/2018/09/11/blog_pattern_chain_of_responsibility/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="android开发工程师一枚">
+<meta property="og:description" content="介绍设计模式中责任链模式相关的内容。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_chain_of_responsibility_class.png">
+<meta property="og:updated_time" content="2018-09-11T06:21:56.593Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="android开发工程师一枚">
+<meta name="twitter:title" content="设计模式——责任链模式">
+<meta name="twitter:description" content="介绍设计模式中责任链模式相关的内容。">
+<meta name="twitter:image" content="//plstyle.cn/img/pl/pattern_chain_of_responsibility_class.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -146,76 +149,175 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-blog_pattern_chain_of_responsibility" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/16/blog_camera_update_down/" class="archive-article-date">
-  	<time datetime="2018-07-16T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-16</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/16/blog_camera_update_down/">解决部分机型(三星、魅族)相机拍摄图片倒向问题</a>
+    <h1 class="article-title" itemprop="name">
+      设计模式——责任链模式
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/09/11/blog_pattern_chain_of_responsibility/" class="archive-article-date">
+  	<time datetime="2018-09-11T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>介绍设计模式中责任链模式相关的内容。<br><a id="more"></a></p>
+<h2 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h2><h3 id="意图"><a href="#意图" class="headerlink" title="意图"></a>意图</h3><p>使多个对象都有机会处理请求，从而避免请求的发送者与接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><ul>
+<li>Handler: 定义处理请求的接口，并且实现后继链（successor）</li>
+</ul>
+<p><img src="/img/pl/pattern_chain_of_responsibility_class.png" alt=""></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Handler</span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> Handler successor;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span>(<span class="params">Handler successor</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.successor = successor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handleRequest</span>(<span class="params">Request request</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler1</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">    public <span class="type">ConcreteHandler1</span>(<span class="type">Handler</span> succossor)&#123;</span><br><span class="line">        <span class="keyword">super</span>(successor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Overrride</span></span><br><span class="line">    <span class="keyword">protected</span> void handlerRequest(<span class="type">Request</span> request)&#123;</span><br><span class="line">        <span class="keyword">if</span>(request.getTpye() == <span class="type">RequestType</span>.<span class="type">TYPE1</span>)&#123;</span><br><span class="line">            <span class="type">System</span>.out.println(request.getName() + <span class="string">" is handle by ConcreteHandler1"</span>);</span><br><span class="line">            <span class="keyword">return</span> ;  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(successor != <span class="literal">null</span>)&#123;</span><br><span class="line">            successor.handleRequest(request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler2</span> <span class="keyword">extends</span> <span class="title">Handler</span></span>&#123;</span><br><span class="line">    public <span class="type">ConcreteHandler2</span>(<span class="type">Handler</span> succossor)&#123;</span><br><span class="line">        <span class="keyword">super</span>(successor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Overrride</span></span><br><span class="line">    <span class="keyword">protected</span> void handlerRequest(<span class="type">Request</span> request)&#123;</span><br><span class="line">        <span class="keyword">if</span>(request.getTpye() == <span class="type">RequestType</span>.<span class="type">TYPE2</span>)&#123;</span><br><span class="line">            <span class="type">System</span>.out.println(request.getName() + <span class="string">" is handle by ConcreteHandler2"</span>);</span><br><span class="line">            <span class="keyword">return</span> ;  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(successor != <span class="literal">null</span>)&#123;</span><br><span class="line">            successor.handleRequest(request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Request</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> RequestType requestType;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Request(RequestType requestType, String name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.requestType = requestType;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> RequestType getType()&#123;</span><br><span class="line">        <span class="keyword">return</span> requestType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String getName()&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">enum</span> <span class="title">RequestType</span>&#123;</span></span><br><span class="line">    TYPE1,TYPE2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="keyword">String</span>[] arg)&#123;</span><br><span class="line">        Handler handler1 = <span class="keyword">new</span> <span class="type">ConcreteHandler1</span>(<span class="literal">null</span>);</span><br><span class="line">        Handler handler2 = <span class="keyword">new</span> <span class="type">ConcreteHandler2</span>(handler1);</span><br><span class="line"></span><br><span class="line">        Request request1 = <span class="keyword">new</span> <span class="type">Request</span>(RequestType.TYPE1, <span class="string">"request1"</span>);</span><br><span class="line">        handler2.handleRequest(request1);</span><br><span class="line"></span><br><span class="line">        Request request2 = <span class="keyword">new</span> <span class="type">Request</span>(RequestType.TYPE2, <span class="string">"request2"</span>);</span><br><span class="line">        handler2.handleRequest(request2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request1 <span class="keyword">is</span> handle <span class="keyword">by</span> ConcreteHandler1</span><br><span class="line">request2 <span class="keyword">is</span> handle <span class="keyword">by</span> ConcreteHandler2</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">camera</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">三星</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">魅族</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ExifInterface</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">责任链模式</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/09/11/blog_pattern_chain_of_responsibility/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/09/07/blog_pattern_bridge/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">设计模式——桥接模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "//plstyle.cn/2018/09/11/blog_pattern_chain_of_responsibility/",
+  owner: 'penglian',
+  repo: 'penglian.github.io',
+  oauth: {
+    client_id: '0b3e228857108da87e6b',
+    client_secret: '6b88d374d745b60c999ddf234a4b225eff2d0997',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -238,9 +340,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
