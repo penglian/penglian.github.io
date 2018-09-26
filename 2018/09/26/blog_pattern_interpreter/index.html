@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Penglian的博客</title>
+  <title>设计模式——解释器模式 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="礼物 - 3.8 	 	 	 	   	 	 		3.8节礼物，来了… 		 		 			 				 					首先，你要输入我的生日 					 					接着，摇一摇… 					 					最后，这就是见证奇迹的时刻… 				 				 					3.8节快乐！ 					祝身体健康,平安长乐 					请打开音量收听…">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/assets/demo/gift/index.html">
+  <meta name="description" content="主要介绍设计模式中解释器相关的内容。">
+<meta name="keywords" content="解释器模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——解释器模式">
+<meta property="og:url" content="//plstyle.cn/2018/09/26/blog_pattern_interpreter/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="礼物 - 3.8 	 	 	 	   	 	 		3.8节礼物，来了… 		 		 			 				 					首先，你要输入我的生日 					 					接着，摇一摇… 					 					最后，这就是见证奇迹的时刻… 				 				 					3.8节快乐！ 					祝身体健康,平安长乐 					请打开音量收听…">
+<meta property="og:description" content="主要介绍设计模式中解释器相关的内容。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="//plstyle.cn/assets/demo/gift/img/shake.png">
-<meta property="og:updated_time" content="2017-07-28T03:51:08.000Z">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_interpreter_class.png">
+<meta property="og:updated_time" content="2018-09-26T08:32:56.521Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="礼物 - 3.8 	 	 	 	   	 	 		3.8节礼物，来了… 		 		 			 				 					首先，你要输入我的生日 					 					接着，摇一摇… 					 					最后，这就是见证奇迹的时刻… 				 				 					3.8节快乐！ 					祝身体健康,平安长乐 					请打开音量收听…">
-<meta name="twitter:image" content="//plstyle.cn/assets/demo/gift/img/shake.png">
+<meta name="twitter:title" content="设计模式——解释器模式">
+<meta name="twitter:description" content="主要介绍设计模式中解释器相关的内容。">
+<meta name="twitter:image" content="//plstyle.cn/img/pl/pattern_interpreter_class.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -149,93 +149,44 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-blog_pattern_interpreter" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式——解释器模式
+    </h1>
+  
+
+        
+        <a href="/2018/09/26/blog_pattern_interpreter/" class="archive-article-date">
+  	<time datetime="2018-09-26T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-26</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
-	<title>礼物 - 3.8</title>
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/index.css">
-	<script src="js/zepto.min.js"></script>
-	<script src="js/shake.js"></script>
-</head>
-<body>
-	<!-- <div id="my_player"></div> -->
-	<header>
-		<p>3.8节礼物，来了…</p>
-		<div class="paper-t"></div>
-		<div class="main">
-			<div class="main-top top2">
-				<section id="se1">
-					<p>首先，你要输入我的生日</p>
-					<input id="myBir" type="text" placeholder="4位数，格式为:mmdd">
-					<p>接着，摇一摇…</p>
-					<img src="img/shake.png">
-					<p>最后，这就是见证奇迹的时刻…</p>
-				</section>
-				<section id="se2" class="hide">
-					<p>3.8节快乐！</p>
-					<p>祝身体健康,平安长乐</p>
-					<p>请打开音量收听…</p>
-				</section>
-			</div>
-		</div>
-		<div class="paper-b"></div>
-	</header>
-</body>
-	<script>
-		var Main = (function() {
-			function playAudio(src) {
-			    if (typeof Audio != "undefined") { 
-			        new Audio(src).play() ;
-			    } else if (typeof device != "undefined") {
-			        if (device.platform == 'Android') {
-			            console.log(src);
-			        }
-			        var mediaRes = new Media(src,
-			            function onSuccess() {
-			                mediaRes.release();
-			            },
-			            function onError(e){
-			                console.log("error playing sound: " + JSON.stringify(e));
-			            });
-			        mediaRes.play();
+        <hr>
+<p>主要介绍设计模式中解释器相关的内容。<br><a id="more"></a></p>
+<h2 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h2><h3 id="意图"><a href="#意图" class="headerlink" title="意图"></a>意图</h3><p>为语言创建解释器，通常由语言的语法以及语法分析来定义</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><ul>
+<li>TerminalExpression: 终结符表达式，每个终结符都需要一个TerminalExpression.</li>
+<li>Context: 上下文，包含解释器之外的一些全局信息。</li>
+</ul>
+<p><img src="/img/pl/pattern_interpreter_class.png" alt=""></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>以下是一个规则检验器实现，具有and和or规则，通过规则可以构建一棵解析树，用来检验一个文本是否满足解析树定义的规则。</p>
+<p>例如一棵解析树为D And (A Or (B C))，文本“D A”满足该解析树定义的规则。</p>
+<p>这里Context指的是String。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Expression</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> interpret(String <span class="keyword">str</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TerminalExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">String</span> literal = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	public <span class="type">TerminalExpression</span>(<span class="type">String</span> str)&#123;</span><br><span class="line">        literal = str;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean interpret(<span class="type">String</span> str)&#123;</span><br><span class="line">        <span class="type">StringTokenizer</span> st = <span class="keyword">new</span> <span class="type">StringTokenizer</span>(str);</span><br><span class="line">        <span class="keyword">while</span>(st.hasMoreTokens())&#123;</span><br><span class="line">        	<span class="type">String</span> test = st.nextToken();</span><br><span class="line">        	<span class="keyword">if</span>(test.equal(literal))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">AndExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">Expression</span> expression1;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="type">Expression</span> expression2;</span><br><span class="line"></span><br><span class="line">	public <span class="type">AndExpression</span>(<span class="type">Expression</span> expression1, <span class="type">Expression</span> expression2)&#123;</span><br><span class="line">        <span class="keyword">this</span>.expression1 = expression1;</span><br><span class="line">        <span class="keyword">this</span>.expression2 = expression2;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean interpret(<span class="type">String</span> str)&#123;</span><br><span class="line">        <span class="keyword">return</span> expression1.interpret(str) &amp;&amp; expression2.interpret(str);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OrExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">Expression</span> expression1;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="type">Expression</span> expression2;</span><br><span class="line"></span><br><span class="line">	public <span class="type">OrExpression</span>(<span class="type">Expression</span> expression1, <span class="type">Expression</span> expression2)&#123;</span><br><span class="line">        <span class="keyword">this</span>.expression1 = expression1;</span><br><span class="line">        <span class="keyword">this</span>.expression2 = expression2;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean interpret(<span class="type">String</span> str)&#123;</span><br><span class="line">        <span class="keyword">return</span> expression1.interpret(str) || expression2.interprep(str);</span><br><span class="line"> 	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Clinet</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Expression buildInterpreterTree()&#123;</span><br><span class="line">		Expression terminal1 = <span class="keyword">new</span> <span class="type">TerminalExpression</span>(<span class="string">"A"</span>);</span><br><span class="line">	</span><br><span class="line">        Expression terminal2 = <span class="keyword">new</span> <span class="type">TerminalExpression</span>(<span class="string">"B"</span>);</span><br><span class="line"></span><br><span class="line">        Expression terminal3 = <span class="keyword">new</span> <span class="type">TerminalExpression</span>(<span class="string">"C"</span>);</span><br><span class="line"></span><br><span class="line">        Expression terminal4 = <span class="keyword">new</span> <span class="type">TerminalExpression</span>(<span class="string">"D"</span>);</span><br><span class="line"></span><br><span class="line">        Expression alternation1 = <span class="keyword">new</span> <span class="type">OrExpression</span>(terminal2, terminal3);</span><br><span class="line">	</span><br><span class="line">        Expression alternation2 = <span class="keyword">new</span> <span class="type">OrExpression</span>(terminal1, alternation1);</span><br><span class="line">	</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">AndExpression</span>(terminal4, alternation2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> staic void main(<span class="keyword">String</span>[] arr)&#123;</span><br><span class="line">    Expression define = buildInterpreterTree();</span><br><span class="line">    <span class="keyword">String</span> context1 = <span class="string">"D A"</span>;</span><br><span class="line">    <span class="keyword">String</span> context2 = <span class="string">"A B"</span>;</span><br><span class="line">    System.out.println(define.interpret(context1));</span><br><span class="line">    System.out.println(define.interpret(context2)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
 
-			    } else {
-			        alert("no sound API to play: " + src);
-			    }
-			}
-			window.addEventListener('shake', autoRun, false);
-			function autoRun(){
-				if($("#myBir").val() == "0425"){
-					$("#se1").hide();
-					$("#se2").show();
-					playAudio("media/gift.ogg");
-				}else{
-					alert("生日错误");
-				}
-				
-			}
-			var init = function() {
-				
-			}
-			return {
-				init: init
-			}
-		})();
-
-		$(Main.init());
-	</script>
-</html>
       
 
       
@@ -243,6 +194,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">解释器模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -293,7 +255,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/assets/demo/gift/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/09/26/blog_pattern_interpreter/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -305,6 +267,16 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/20/blog_pattern_command/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">设计模式——命令模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -338,7 +310,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "//plstyle.cn/assets/demo/gift/index.html",
+  id: "//plstyle.cn/2018/09/26/blog_pattern_interpreter/",
   owner: 'penglian',
   repo: 'penglian.github.io',
   oauth: {
@@ -371,7 +343,7 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

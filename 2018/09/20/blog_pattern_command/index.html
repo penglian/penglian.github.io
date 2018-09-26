@@ -17,7 +17,7 @@
 <meta property="og:description" content="介绍设计模式中命令模式相关的内容。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="//plstyle.cn/img/pl/pattern_command_class.jpg">
-<meta property="og:updated_time" content="2018-09-20T05:33:22.216Z">
+<meta property="og:updated_time" content="2018-09-20T06:25:56.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式——命令模式">
 <meta name="twitter:description" content="介绍设计模式中命令模式相关的内容。">
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
 <ul>
 <li><p>Command(抽象命令类)：抽象命令类一般是一个接口或者抽象类，其中声明了用于执行请求的execute()等方法，通过这些方法可以调用请求接收者的相关操作。</p>
 </li>
-<li><p>ConCreteCommand(具体命令类)：具体命令类是抽象命令类的子类，实现了在抽象命令类种的声明的方法，它对应的具体接收者对象，将接受者的对象的动作绑定其中。在实现execute()方法时，将调用接收者对象的相关操作（Action）。</p>
+<li><p>ConCreteCommand(具体命令类)：具体命令类是抽象命令类的子类，实现了在抽象命令类种的声明的方法，它对应的具体接收者对象，将接受者的对象的动作绑定其中。在实现execute()方法时，将调用接收者对象的相关操作（Action）。<br>h</p>
 </li>
 <li><p>Invoker(调用者)：调用者即请求发送者，它通过命令对象来执行请求。一个调用者并不需要在设计时确定其接收者，因此它只与抽象命令类之间存在关联关系。在程序运行时可以将一个具体命令对象注入其中，再调用具体命令对象的execute()方法，从而实现简介调用请求接收者的相关操作。</p>
 </li>
@@ -303,6 +303,15 @@ var _hmt = _hmt || [];
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/09/26/blog_pattern_interpreter/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          设计模式——解释器模式
+        
+      </div>
+    </a>
   
   
     <a href="/2018/09/12/blog_view_work_principle/" id="article-nav-older" class="article-nav-link-wrap">
@@ -625,6 +634,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">命令模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">解释器模式</a>
               </li>
             
             <div class="clearfix"></div>
