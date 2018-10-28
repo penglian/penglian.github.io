@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Penglian的博客</title>
+  <title>设计模式——迭代器模式 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/assets/demo/hack_demo.html">
+  <meta name="description" content="介绍设计模式中迭代器模式相关的内容。">
+<meta name="keywords" content="迭代器模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——迭代器模式">
+<meta property="og:url" content="//plstyle.cn/2018/10/08/blog_pattern_iterator/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
+<meta property="og:description" content="介绍设计模式中迭代器模式相关的内容。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2017-07-28T03:51:08.000Z">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_class_iterator.png">
+<meta property="og:updated_time" content="2018-10-28T04:34:57.077Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="h3,h4{ 			text-align: center; 		} 		#main{ 			width: 350px; 			height: 100px; 			border: 1px solid #000; 			margin: 0 auto; 		} 		#main .box{ 			width: 100px; 			height: 100px; 			margin-le">
+<meta name="twitter:title" content="设计模式——迭代器模式">
+<meta name="twitter:description" content="介绍设计模式中迭代器模式相关的内容。">
+<meta name="twitter:image" content="//plstyle.cn/img/pl/pattern_class_iterator.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -147,58 +149,40 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-blog_pattern_iterator" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式——迭代器模式
+    </h1>
+  
+
+        
+        <a href="/2018/10/08/blog_pattern_iterator/" class="archive-article-date">
+  	<time datetime="2018-10-08T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title></title>
-	<style type="text/css">
-		h3,h4{
-			text-align: center;
-		}
-		#main{
-			width: 350px;
-			height: 100px;
-			border: 1px solid #000;
-			margin: 0 auto;
-		}
-		#main .box{
-			width: 100px;
-			height: 100px;
-			margin-left: 10px;
-			position: relative;
-			float: left;
-			background: #333;
-			color:#ddd;
-		}
-		#main .task1:hover{
-			z-index: 999;
-		}
-		#main .task2:hover{
-			z-index: 999;
-			background: #999;
-		}
-		#main .task3:hover{
-			z-index: 999;
-			background: #333;
-		}
-	</style>
-</head>
-<body>
-	<h3>三个background为#333的box</h3>
-	<h4>- 请在IE6，IE7中触发hover -</h4>
-	<div id="main">
-		<div class="box task1">box1 - 未设置backgorund</div>
-		<div class="box task2">box2 - background: #999</div>
-		<div class="box task3">box3 - background: #333</div>
-	</div>
-</body>
-</html>
+        <hr>
+<p>介绍设计模式中迭代器模式相关的内容。<br><a id="more"></a></p>
+<h3 id="意图"><a href="#意图" class="headerlink" title="意图"></a>意图</h3><p>提供一种顺序访问聚合对象元素的方法，并且不暴露聚合对象的内部表示</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><ul>
+<li>Aggregate是聚合类，其中createIterator方法可以产生一个Iterator。</li>
+<li>Iterator主要定义了hasNext（）与next（）方法。</li>
+<li>Client组合了Aggregate，为了迭代遍历Aggregate，也需要组合Iterator。</li>
+</ul>
+<p><img src="/img/pl/pattern_class_iterator.png" alt=""></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>Aggregate&#123;</span><br><span class="line">     Iterator createIterator();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteAggregate</span> <span class="keyword">implements</span> <span class="title">Aggregate</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer[] items;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteAggregate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        items = <span class="keyword">new</span> Integer[<span class="number">10</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;items.length; i++)&#123;</span><br><span class="line">            items[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteIterator&lt;Integer&gt;(items);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>Iterator&lt;T&gt;&#123;</span><br><span class="line">    T next();</span><br><span class="line"></span><br><span class="line">    boolean hasNext();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteIterator</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Iterator</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T[] items;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> position;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteIterator</span><span class="params">(T[] items)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.items = items;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> items[position++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> position &lt; items.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Client</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] arr</span>)</span>&#123;</span><br><span class="line">        Aggregate aggregate =  <span class="keyword">new</span> ConcreteAggregate();</span><br><span class="line">        Iterator&lt;Integer&gt; iterator = aggregate.createIterator();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasNext())&#123;</span><br><span class="line">            System.<span class="keyword">out</span>.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -206,6 +190,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">迭代器模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -256,7 +251,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/assets/demo/hack_demo.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/10/08/blog_pattern_iterator/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +263,16 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/27/blog_java_annotation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java注解（Annotation）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -301,7 +306,7 @@ var _hmt = _hmt || [];
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "//plstyle.cn/assets/demo/hack_demo.html",
+  id: "//plstyle.cn/2018/10/08/blog_pattern_iterator/",
   owner: 'penglian',
   repo: 'penglian.github.io',
   oauth: {
@@ -334,7 +339,7 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
