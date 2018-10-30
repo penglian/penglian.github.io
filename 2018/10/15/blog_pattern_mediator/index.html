@@ -6,19 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Tag: 迭代器模式 | Penglian的博客</title>
+  <title>设计模式——中介者模式 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="android开发工程师一枚">
-<meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/tags/迭代器模式/index.html">
+  <meta name="description" content="介绍设计模式中中介者模式相关的内容。">
+<meta name="keywords" content="迭代器模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——中介者模式">
+<meta property="og:url" content="//plstyle.cn/2018/10/15/blog_pattern_mediator/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="android开发工程师一枚">
+<meta property="og:description" content="介绍设计模式中中介者模式相关的内容。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_class_mediator.png">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_mediator_implemention1.jpg">
+<meta property="og:image" content="//plstyle.cn/img/pl/pattern_mediator_implemention2.jpg">
+<meta property="og:updated_time" content="2018-10-30T12:08:22.021Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="android开发工程师一枚">
+<meta name="twitter:title" content="设计模式——中介者模式">
+<meta name="twitter:description" content="介绍设计模式中中介者模式相关的内容。">
+<meta name="twitter:image" content="//plstyle.cn/img/pl/pattern_class_mediator.png">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -146,36 +151,54 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-blog_pattern_mediator" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      设计模式——中介者模式
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/15/blog_pattern_mediator/" class="archive-article-date">
+
+        
+        <a href="/2018/10/15/blog_pattern_mediator/" class="archive-article-date">
   	<time datetime="2018-10-15T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/15/blog_pattern_mediator/">设计模式——中介者模式</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>介绍设计模式中中介者模式相关的内容。<br><a id="more"></a></p>
+<h3 id="意图"><a href="#意图" class="headerlink" title="意图"></a>意图</h3><p>集中相关对象之间复杂的沟通和控制方式。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><ul>
+<li>Mediator: 中介者，定义一个接口用于与各同事（Colleague）对象沟通。</li>
+<li>Colleague: 同事，相关对象。</li>
+</ul>
+<p><img src="/img/pl/pattern_class_mediator.png" alt=""></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>Alarm(闹钟)、Coffeepot(咖啡壶)、Calendar(日历)、Sprinkler(喷头)是一种相关的对象，在某个对象的事件产生时需要去操作其它对象，形成了下面这种依赖结构：</p>
+<p><img src="/img/pl/pattern_mediator_implemention1.jpg" alt=""></p>
+<p>使用中介者模式可以将复杂的依赖结构变成星型结构：</p>
+<p><img src="/img/pl/pattern_mediator_implemention2.jpg" alt=""></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Colleague</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onEvent</span>(<span class="params">Mediator mediator</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Alarm</span> <span class="keyword">extends</span> <span class="title">Colleague</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onEvent(<span class="type">Mediator</span> mediator)&#123;</span><br><span class="line">        mediator.onEvent(<span class="string">"alram"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doAlarm()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"doAlarm()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">CoffeePot</span> <span class="keyword">extends</span> <span class="title">Colleague</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onEvent(<span class="type">Mediator</span> mediator)&#123;</span><br><span class="line">        mediator.onEvent(<span class="string">"coffeePot"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doCoffeePot()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"doCoffeePot()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Calendar</span> <span class="keyword">extends</span> <span class="title">Colleague</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onEvent(<span class="type">Mediator</span> mediator)&#123;</span><br><span class="line">        mediator.onEvent(<span class="string">"calendar"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doCalendar()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"doCalendar()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Sprinkler</span> <span class="keyword">extends</span> <span class="title">Colleague</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onEvent(<span class="type">Mediator</span> mediator)&#123;</span><br><span class="line">        mediator.onEvent(<span class="string">"sprinkler"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void doSprinkler()&#123;</span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"doSprinkler()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Mediator</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onEvent</span>(<span class="params">String eventType</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteMediator</span> <span class="keyword">extends</span> <span class="title">Mediator</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Alarm alarm;</span><br><span class="line">    <span class="keyword">private</span> CoffeePor coffeePot;</span><br><span class="line">    <span class="keyword">private</span> Calendar calendar;</span><br><span class="line">    <span class="keyword">private</span> Sprinkler sprinkler;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteMediator</span><span class="params">(Alarm alarm, CoffeePor coffeePor, Calendar calendar, Sprinkler sprinkler)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.alarm = alarm;</span><br><span class="line">        <span class="keyword">this</span>.coffeePor = coffeePor;</span><br><span class="line">        <span class="keyword">this</span>.calendar = calendar;</span><br><span class="line">        <span class="keyword">this</span>.sprinkler = sprinkler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(String eventType)</span></span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(eventType)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"alarm"</span>:</span><br><span class="line">                doAlarmEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"coffeePot"</span>:</span><br><span class="line">                doCoffeePotEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"calendar"</span>:</span><br><span class="line">                doCalendarEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"sprinkler"</span>:</span><br><span class="line">               doSprinklerEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doAlarmEvent</span><span class="params">()</span></span>&#123;</span><br><span class="line">        alarm.doAlarm();</span><br><span class="line">        coffeePot.doCoffeePot();</span><br><span class="line">        calendar.doCalendar();</span><br><span class="line">        sprinkler.doSprinkler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doCoffeePotEvent</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doCalendarEvent</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doSprinkler</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="keyword">String</span> []arr)&#123;</span><br><span class="line">        Alarm alarm = <span class="keyword">new</span> <span class="type">Alarm</span>();</span><br><span class="line">        CoffeePot coffeePot = <span class="keyword">new</span> <span class="type">CoffeePot</span>();</span><br><span class="line">        Calendar calendar = <span class="keyword">new</span> <span class="type">Calendar</span>();</span><br><span class="line">        Sprinkler sprinkler = <span class="keyword">new</span> <span class="type">Sprinkler</span>();</span><br><span class="line">        Mediator mediator = <span class="keyword">new</span> <span class="type">ConcreteMediator</span>(alarm, coffeePot, calendar, sprinkler);</span><br><span class="line">        alarm.onEvent(mediator);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//结果实现</span></span><br><span class="line">doAlarm()</span><br><span class="line">doCoffeePot()</span><br><span class="line">doCalendar()</span><br><span class="line">doSprinkler()</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -187,57 +210,122 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2018/10/15/blog_pattern_mediator/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/08/blog_pattern_iterator/" class="archive-article-date">
-  	<time datetime="2018-10-08T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/08/blog_pattern_iterator/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">设计模式——迭代器模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/blog_pattern_iterator/">设计模式——迭代器模式</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">迭代器模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "//plstyle.cn/2018/10/15/blog_pattern_mediator/",
+  owner: 'penglian',
+  repo: 'penglian.github.io',
+  oauth: {
+    client_id: '0b3e228857108da87e6b',
+    client_secret: '6b88d374d745b60c999ddf234a4b225eff2d0997',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -260,9 +348,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
