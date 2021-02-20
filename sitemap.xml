@@ -2,98 +2,252 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>//litten.me/2018/04/25/blog_restful_GitHub/</loc>
+    <loc>//plstyle.cn/2018/10/25/java-collection-map/</loc>
+    
+    <lastmod>2018-11-03T12:19:54.792Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/10/15/blog_pattern_mediator/</loc>
+    
+    <lastmod>2018-10-30T12:08:22.021Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/10/08/blog_pattern_iterator/</loc>
+    
+    <lastmod>2018-10-28T04:34:57.077Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/27/blog_java_annotation/</loc>
+    
+    <lastmod>2018-09-27T02:36:21.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/26/blog_pattern_interpreter/</loc>
+    
+    <lastmod>2018-09-26T08:32:56.521Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/20/blog_pattern_command/</loc>
+    
+    <lastmod>2018-09-20T06:25:56.146Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/11/blog_pattern_chain_of_responsibility/</loc>
+    
+    <lastmod>2018-09-11T06:34:08.873Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/07/blog_pattern_bridge/</loc>
+    
+    <lastmod>2018-09-07T07:33:20.239Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/04/blog_pattern_propotype/</loc>
+    
+    <lastmod>2018-09-04T02:08:13.615Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/08/27/blog_pattern_factory/</loc>
+    
+    <lastmod>2018-09-04T01:53:43.148Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/03/%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E7%9A%84http%E8%AF%B7%E6%B1%82/</loc>
+    
+    <lastmod>2018-09-03T09:20:13.660Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/09/03/blog_view_overdraw/</loc>
+    
+    <lastmod>2018-09-03T07:16:12.824Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/08/30/blog_concurrence/</loc>
+    
+    <lastmod>2018-08-31T08:17:39.576Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/08/18/blog_view_distribute/</loc>
+    
+    <lastmod>2018-08-23T08:35:51.107Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/08/07/blog_code_readability/</loc>
+    
+    <lastmod>2018-08-07T11:42:46.368Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/19/blog_pattern_principio/</loc>
+    
+    <lastmod>2018-07-19T11:35:07.229Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/17/blog_rxjava2/</loc>
+    
+    <lastmod>2018-07-17T02:54:54.743Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/16/blog_camera_update_down/</loc>
+    
+    <lastmod>2018-07-16T08:15:32.798Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/12/blog_screenshot_save/</loc>
+    
+    <lastmod>2018-07-12T12:08:00.220Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/06/blog_combine_bitmap/</loc>
+    
+    <lastmod>2018-07-06T12:51:13.054Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/07/04/blog_singleInstance/</loc>
+    
+    <lastmod>2018-07-04T10:14:02.162Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/06/29/blog_deviceId_GitHub/</loc>
+    
+    <lastmod>2018-06-29T13:07:50.110Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>//plstyle.cn/2018/04/25/blog_restful_GitHub/</loc>
     
     <lastmod>2018-06-13T06:50:40.086Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/2018/06/13/blog_ipc_GitHub/</loc>
+    <loc>//plstyle.cn/2018/06/13/blog_ipc_GitHub/</loc>
     
     <lastmod>2018-06-13T06:23:17.653Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/2018/06/06/blog_serialization_GitHub/</loc>
+    <loc>//plstyle.cn/2018/06/06/blog_serialization_GitHub/</loc>
     
     <lastmod>2018-06-08T15:06:35.850Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/404.html</loc>
+    <loc>//plstyle.cn/404.html</loc>
     
     <lastmod>2018-06-08T12:11:56.003Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/hack_demo.html</loc>
+    <loc>//plstyle.cn/assets/demo/hack_demo.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/border1px.html</loc>
+    <loc>//plstyle.cn/assets/demo/gift/css/index.css</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/jiugongge_demo.html</loc>
+    <loc>//plstyle.cn/assets/demo/jiugongge_demo2.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/pre_css3_demo/demo.html</loc>
+    <loc>//plstyle.cn/assets/demo/coffee_pc_demo/pro-con.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/gift/index.html</loc>
+    <loc>//plstyle.cn/assets/demo/mediator/demo.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/coffee_pc_demo/pro-con.html</loc>
+    <loc>//plstyle.cn/assets/demo/my_news_reader/index.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/gift/css/index.css</loc>
+    <loc>//plstyle.cn/assets/demo/gift/index.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/mediator/demo.html</loc>
+    <loc>//plstyle.cn/assets/demo/pre_css3_demo/demo.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/my_news_reader/index.html</loc>
+    <loc>//plstyle.cn/assets/demo/border1px.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>//litten.me/assets/demo/jiugongge_demo2.html</loc>
+    <loc>//plstyle.cn/assets/demo/jiugongge_demo.html</loc>
     
     <lastmod>2017-07-28T03:51:08.000Z</lastmod>
     
