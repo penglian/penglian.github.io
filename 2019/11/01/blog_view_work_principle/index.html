@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//plstyle.cn">
-  <title>Archives: 2019 | Penglian的博客</title>
+  <title>View的工作原理 | Penglian的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="android开发工程师一枚">
+  <meta name="description" content="主要介绍View的工作原理以及自定义View的实现方式。">
 <meta name="keywords" content="移动端,andoird,java,javascript,html5,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Penglian的博客">
-<meta property="og:url" content="//plstyle.cn/archives/2019/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View的工作原理">
+<meta property="og:url" content="//plstyle.cn/2019/11/01/blog_view_work_principle/index.html">
 <meta property="og:site_name" content="Penglian的博客">
-<meta property="og:description" content="android开发工程师一枚">
+<meta property="og:description" content="主要介绍View的工作原理以及自定义View的实现方式。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-27T13:54:53.130Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Penglian的博客">
-<meta name="twitter:description" content="android开发工程师一枚">
+<meta name="twitter:title" content="View的工作原理">
+<meta name="twitter:description" content="主要介绍View的工作原理以及自定义View的实现方式。">
   
     <link rel="alternative" href="/atom.xml" title="Penglian的博客" type="application/atom+xml">
   
@@ -146,58 +147,154 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-blog_view_work_principle" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-<<<<<<< HEAD
-	      	<a href="/2019/11/27/blog_view_work_principle/" class="archive-article-date">
-  	<time datetime="2019-11-27T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-27</time>
-=======
-	      	<a href="/2019/11/01/blog_view_work_principle/" class="archive-article-date">
-  	<time datetime="2019-11-01T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
->>>>>>> 379cf0b1bdce730feac09fbad8c026f8444df839
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-<<<<<<< HEAD
-      <a class="archive-article-title" href="/2019/11/27/blog_view_work_principle/">View的工作原理</a>
-=======
-      <a class="archive-article-title" href="/2019/11/01/blog_view_work_principle/">View的工作原理</a>
->>>>>>> 379cf0b1bdce730feac09fbad8c026f8444df839
+    <h1 class="article-title" itemprop="name">
+      View的工作原理
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/11/01/blog_view_work_principle/" class="archive-article-date">
+  	<time datetime="2019-11-01T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>主要介绍View的工作原理以及自定义View的实现方式。<br><a id="more"></a></p>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><h2 id="初识ViewRoot和DecorView"><a href="#初识ViewRoot和DecorView" class="headerlink" title="初识ViewRoot和DecorView"></a>初识ViewRoot和DecorView</h2><p>在Android的知识体系中，View扮演着很重要的角色，简单来说，View是Android在视觉上的呈现。在界面上android提供了一套GUI库，里面有很多的控件，但是很多时候我们并不满足系统提供的控件，因为这样意味着应用界面的同类化比较严重。那么怎样才能做出与众不同的效果呢？答案是自定义View，也可以叫自定义控件，通过自定义View<br>我们可以实现各种五花八门的效果。但是自定义View是有一定难度的，尤其是复杂的自定义View，大部分我们仅仅了解基本控件的使用方法是无法做出复杂的自定义控件的。为了更好地自定义View，还需掌握View的底层工作原理，比如View的测量流程、布局流程、以及绘制流程，掌握这几个基本流程之后，我们就对View的底层更加了解，这样我们就可以做出一个比较完善的自定义View了。</p>
+<p>除了View的三大流程之外，View的常见的回调方法也是需要熟练掌握的，比如构造方法、onAttach()</p>
+<h2 id="理解MeasureSpec"><a href="#理解MeasureSpec" class="headerlink" title="理解MeasureSpec"></a>理解MeasureSpec</h2><h3 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h3><h3 id="MeasureSpec和LayoutParam"><a href="#MeasureSpec和LayoutParam" class="headerlink" title="MeasureSpec和LayoutParam"></a>MeasureSpec和LayoutParam</h3><h2 id="View的工作流程"><a href="#View的工作流程" class="headerlink" title="View的工作流程"></a>View的工作流程</h2><h3 id="measure过程"><a href="#measure过程" class="headerlink" title="measure过程"></a>measure过程</h3><h3 id="layout过程"><a href="#layout过程" class="headerlink" title="layout过程"></a>layout过程</h3><h3 id="draw过程"><a href="#draw过程" class="headerlink" title="draw过程"></a>draw过程</h3><h2 id="自定义View"><a href="#自定义View" class="headerlink" title="自定义View"></a>自定义View</h2><h3 id="自定义View的分类"><a href="#自定义View的分类" class="headerlink" title="自定义View的分类"></a>自定义View的分类</h3><h3 id="自定义View须知"><a href="#自定义View须知" class="headerlink" title="自定义View须知"></a>自定义View须知</h3><h3 id="自定义View示例"><a href="#自定义View示例" class="headerlink" title="自定义View示例"></a>自定义View示例</h3><h3 id="自定义View思想"><a href="#自定义View思想" class="headerlink" title="自定义View思想"></a>自定义View思想</h3>
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://plstyle.cn/2019/11/01/blog_view_work_principle/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/10/25/java-collection-map/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA-容器介绍</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "//plstyle.cn/2019/11/01/blog_view_work_principle/",
+  owner: 'penglian',
+  repo: 'penglian.github.io',
+  oauth: {
+    client_id: '0b3e228857108da87e6b',
+    client_secret: '6b88d374d745b60c999ddf234a4b225eff2d0997',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -220,8 +317,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
